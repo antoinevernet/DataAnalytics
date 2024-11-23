@@ -9,6 +9,18 @@ library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+# Welcome!
+
+Welcome to this introductory tutorial on using R. This series of tutorials are companions to the course material for several courses at UCL BSSC: BCPM0094 Data Analytics for Project Managers and BCPM0049 Social Network Analysis. They focus primarily on helping you with using R with a focus on the tools that are useful to complete the courses. This means that they are by no means a complete overview of what you can do with R and jump over some topics that would usually be covered in an introduction to R, this also means that they cover some more advanced material that you would usually not find in an introduction to R. 
+There are many more complete (and amazing) resources on R and on causal inference. Below are a few of the ones that we often refer to in the course:
+
+- R for Data Science
+- The Effect
+- Causal Inference: The Mixtape
+- Data Visualization: A Practical Introduction
+
+
+
 
 ## Topic 1
 
