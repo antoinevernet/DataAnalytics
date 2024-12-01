@@ -1,5 +1,5 @@
 ---
-title: "Tutorial"
+title: "Introduction"
 output: learnr::tutorial
 runtime: shiny_prerendered
 ---
@@ -9,30 +9,84 @@ library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-# Welcome!
+
+
+![](www/img/pexels-piotrbaranowski-22763683.jpg){#id .class width=100% height=100%}
+
+
+## Welcome!
 
 Welcome to this introductory tutorial on using R. This series of tutorials are companions to the course material for several courses at UCL BSSC: BCPM0094 Data Analytics for Project Managers and BCPM0049 Social Network Analysis. They focus primarily on helping you with using R with a focus on the tools that are useful to complete the courses. This means that they are by no means a complete overview of what you can do with R and jump over some topics that would usually be covered in an introduction to R, this also means that they cover some more advanced material that you would usually not find in an introduction to R. 
 There are many more complete (and amazing) resources on R and on causal inference. Below are a few of the ones that we often refer to in the course:
 
-- R for Data Science
+- R for Data Science (2nd Edition) https://r4ds.hadley.nz/preface-2e
 - The Effect
 - Causal Inference: The Mixtape
 - Data Visualization: A Practical Introduction
 
 
+Whenever possible, I will indicate where in these resources to find additional material.
 
 
-## Topic 1
+Other sources
 
-### Exercise 
+https://github.com/paulgp/applied-methods-phd
+https://paulgp.github.io/2024/06/24/llm_talk.html
+https://www.andrewheiss.com/blog/
 
-*Here's a simple exercise with an empty code chunk provided for entering the answer.*
+https://github.com/Mixtape-Sessions/Causal-Inference-2
+https://github.com/Mixtape-Sessions/Causal-Inference-1
+https://mixtape.scunning.com/teaching_tools
+
+https://mine-cetinkaya-rundel.github.io/r4ds-solutions/data-visualize.html
+
+- the ggplot2 book https://ggplot2-book.org/preface-3e
+- Tidy modelling with R https://www.tmwr.org
+- Hands-on Programming with R https://rstudio-education.github.io/hopr/
+- https://clauswilke.com/dataviz/
+
+
+The tutorials are organised as follow:
+
+Tutorial 1: The basics
+- The bases (chapter 2 of R4DS)
+- data transformation (chapter 3 of R4DS) dplyr on rows and column, the pipe, groups
+- data import (chapter 7)
+
+
+Tutorial 2: Basic Visualisation
+- ggplot2 chapter 9 of r4ds
+- exploratory data analysis (chapter 10 r4ds)
+- labels, legends (chapter 11)
+
+
+Tutorial 3: Types
+
+Vectors, numbers, string, factors, dates, missing values
+
+Tutorial 4: data in and out (csv, spreadsheets, databases, hierarchical data)
+
+Tutorial 5: functions, iteration
+
+
+
+
+## Getting started
+
+If you have not yet installed R and RStudio, please see the following material:
+
+- links!!!
+
+### The simplest exercise ever
 
 Write the R code required to add two plus two:
 
 ```{r two-plus-two, exercise=TRUE}
 
 ```
+
+As you can see, R is a calculator, but it is much more than this. It is a fully-fleshed programming language, in the limit, you can write any piece of software in R. 
+
 
 ### Exercise with Code
 
