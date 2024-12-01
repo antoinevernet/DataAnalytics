@@ -51,6 +51,7 @@ https://mine-cetinkaya-rundel.github.io/r4ds-solutions/data-visualize.html
 The tutorials are organised as follow:
 
 Tutorial 1: The basics
+
 - The bases (chapter 2 of R4DS)
 - data transformation (chapter 3 of R4DS) dplyr on rows and column, the pipe, groups
 - data import (chapter 7)
@@ -58,6 +59,7 @@ Tutorial 1: The basics
 Link...
 
 Tutorial 2: Basic Visualisation
+
 - ggplot2 chapter 9 of r4ds
 - exploratory data analysis (chapter 10 r4ds)
 - labels, legends (chapter 11)
