@@ -93,6 +93,11 @@ You could then do further modifications on the results, for example divide by th
 
 ## Data transformation
 
+This part of the tutorial is roughly based on chapter 3 of R for data science. 
+For a lot of the day to day data wrangling, we will use the package `dplyr`.
+
+
+
 Data transformation (chapter 3 of R4DS) dplyr on rows and column, the pipe, groups
 
 

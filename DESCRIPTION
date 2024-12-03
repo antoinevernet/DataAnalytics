@@ -10,3 +10,5 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/antoinevernet/DataAnalytics
 BugReports: https://github.com/antoinevernet/DataAnalytics/issues
+Imports:
+  nycflights13
