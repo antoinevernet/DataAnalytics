@@ -45,6 +45,13 @@ https://mine-cetinkaya-rundel.github.io/r4ds-solutions/data-visualize.html
 - Hands-on Programming with R https://rstudio-education.github.io/hopr/
 - https://clauswilke.com/dataviz/
 
+Advanced material
+
+https://adv-r.hadley.nz/introduction.html
+
+https://r-pkgs.org/whole-game.html
+
+
 
 ## Structure of the tutorials!
 
@@ -79,6 +86,9 @@ Link...
 Tutorial 5: functions, iteration
 
 Link...
+
+
+The rest of this tutorial walks you through installing R and RStudio and demonstrates how the tutorials work.
 
 
 ## Getting started
@@ -149,3 +159,5 @@ quiz(
 )
 ```
 
+
+This is the end of this first tutorial, you can now start the next tutorial: The Basics

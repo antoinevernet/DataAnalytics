@@ -1,0 +1,126 @@
+---
+title: "Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Tutorial 1: The basics
+
+This tutorial has three parts, all based on a different chapter of R for data science (https://r4ds.hadley.nz/).
+
+- The bases (chapter 2)
+- data transformation (chapter 3)
+- data import (chapter 7)
+
+
+## The bases
+
+This first part of the tutorial walks you through the bases of programming in R, it roughly follows the second chapter of R for data science.
+
+
+### R is a calculator 
+
+Write the R code required to add fifty-nine plus seventy-three plus two, divided by three:
+
+```{r basicOperations, exercise=TRUE}
+
+```
+
+### Creating objects
+
+You can use the `<-` (assignment operator) to create an object. You can then use code to manipulate objects.
+Assign the value 2 to an object called two:
+
+```{r objects, exercise=TRUE}
+#Example
+one <- 1
+
+one
+
+two
+
+```
+
+
+### the `c()` function
+
+The `c()` function allows you to create vectors containing several elements.
+You can do operations on the resulting vector. Try it:
+
+```{r c, exercise=TRUE}
+#Example
+number <- c(1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+number
+
+#Try an operation here:
+
+```
+
+
+
+## Data transformation
+
+Data transformation (chapter 3 of R4DS) dplyr on rows and column, the pipe, groups
+
+
+## Importing data
+
+data import (chapter 7)
+
+### Exercise with Code
+
+*Here's an exercise with some prepopulated code as well as `exercise.lines = 5` to provide a bit more initial room to work.*
+
+Now write a function that adds any two numbers and then call it:
+
+```{r add-function, exercise=TRUE, exercise.lines = 5}
+add <- function() {
+  
+}
+```
+
+## Topic 2
+
+### Exercise with Hint
+
+*Here's an exercise where the chunk is pre-evaluated via the `exercise.eval` option (so the user can see the default output we'd like them to customize). We also add a "hint" to the correct solution via the chunk immediate below labeled `print-limit-hint`.*
+
+Modify the following code to limit the number of rows printed to 5:
+
+```{r print-limit, exercise=TRUE, exercise.eval=TRUE}
+mtcars
+```
+
+```{r print-limit-hint}
+head(mtcars)
+```
+
+### Quiz
+
+*You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
+
+Some questions to verify that you understand the purposes of various base and recommended R packages:
+
+```{r quiz}
+quiz(
+  question("Which package contains functions for installing other R packages?",
+    answer("base"),
+    answer("tools"),
+    answer("utils", correct = TRUE),
+    answer("codetools")
+  ),
+  question("Which of the R packages listed below are used to create plots?",
+    answer("lattice", correct = TRUE),
+    answer("tools"),
+    answer("stats"),
+    answer("grid", correct = TRUE)
+  )
+)
+```
+
