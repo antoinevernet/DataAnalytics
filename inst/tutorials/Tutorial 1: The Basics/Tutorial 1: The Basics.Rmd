@@ -63,6 +63,17 @@ number
 ```
 
 
+### Comments
+
+Code is not always straightforward and there are plenty of time (what I mean here is: ALL THE TIME) when an additional comment might make it easier for the reader of your code to understand what you were trying to achieve.
+
+```{r comment, exercise=TRUE}
+#This is a comment, they all start with #
+
+# Write an operation and a comment explaining what it does:
+
+```
+
 
 ## Data transformation
 
