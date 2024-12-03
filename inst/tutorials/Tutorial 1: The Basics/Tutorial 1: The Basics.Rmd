@@ -112,13 +112,25 @@ flights
 
 We will start with operations on rows, then move on to operations on columns.
 
-### Flights on the first of January
+### Filter: Flights on the first of January
 
 The code below filters the dataframe for flights on the first of January. 
 Can you add code to check the number of flights that left New York on the 1st of January 2013?
 
 ```{r firstjan, exercise=TRUE}
 filter(flights, day == 1 & month == 1)
+
+
+```
+
+The first argument is always a dataframe, and the output is also a dataframe.
+
+### Distinct: Counting unique occurences
+
+
+
+```{r occ, exercise=TRUE}
+distinct(flights, origin, dest)
 
 
 ```
