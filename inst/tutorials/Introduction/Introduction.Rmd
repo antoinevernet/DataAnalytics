@@ -51,6 +51,7 @@ https://adv-r.hadley.nz/introduction.html
 
 https://r-pkgs.org/whole-game.html
 
+https://happygitwithr.com
 
 
 ## Structure of the tutorials!

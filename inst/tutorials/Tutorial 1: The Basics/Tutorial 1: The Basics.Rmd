@@ -75,6 +75,22 @@ Code is not always straightforward and there are plenty of time (what I mean her
 ```
 
 
+### Functions
+
+Functions are pre-written code to perform specific operations. Many are built-in R, and many more can be access through installing additional packages. 
+Functions is how we do most things in R. 
+For example, you can use the `sum()` function to add a large number of numbers, for example, numbers that you have stored in a vector
+
+
+```{r functions, exercise=TRUE}
+# This is a vector of 10,000 numbers between 1 and 100
+numb <- sample(1:100, 10000, replace = TRUE)
+
+
+```
+
+You could then do further modifications on the results, for example divide by the number of items in your vector to get the average (you can do this with the `length()` function). Note that there is a built-in function for the average: `mean()`
+
 ## Data transformation
 
 Data transformation (chapter 3 of R4DS) dplyr on rows and column, the pipe, groups
