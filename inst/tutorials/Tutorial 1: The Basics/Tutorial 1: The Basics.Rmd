@@ -6,6 +6,8 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(nycflights13)
+library(dplyr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -95,11 +97,31 @@ You could then do further modifications on the results, for example divide by th
 
 This part of the tutorial is roughly based on chapter 3 of R for data science. 
 For a lot of the day to day data wrangling, we will use the package `dplyr`.
+Like in chapter 3 of R for data science, I use the `nycflights13` package to access data on flights from New York in 2013.
+
+First, let's look at the data.
+
+```{r flights}
+library(nycflights13)
+flights
 
 
+```
 
-Data transformation (chapter 3 of R4DS) dplyr on rows and column, the pipe, groups
+`dplyr` provides tools to manipulate data frame and perform many of the common data wrangling tasks that will be performed during data analysis.
 
+We will start with operations on rows, then move on to operations on columns.
+
+### Flights on the first of January
+
+The code below filters the dataframe for flights on the first of January. 
+Can you add code to check the number of flights that left New York on the 1st of January 2013?
+
+```{r firstjan, exercise=TRUE}
+filter(flights, day == 1 & month == 1)
+
+
+```
 
 ## Importing data
 
