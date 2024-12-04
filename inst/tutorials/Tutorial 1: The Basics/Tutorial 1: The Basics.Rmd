@@ -239,24 +239,56 @@ flights |>
 
 ```
 
+
+### The pipe: make your code easier to write and read
+
+The pipe (`|>`) allows you to chain operations and make complex operations easier to parse compare to a series of nested functions.
+
+Use the pipe to filter the `flights` dataset for flights with destination "IAH".
+Then group the data by `month` and summarize to find the average delay.
+
+```{r pipe, exercise=TRUE}
+
+```
+
+```{r pipe-hint-1}
+#Use `|>` to chain commands and `group_by()` before `summarize()
+```
+
+```{r pipe-hint-2}
+flights |> 
+  filter(dest == "IAH") |> 
+  group_by(month) |> 
+  summarize(avg_delay = mean(arr_delay, na.rm = TRUE))
+
+```
+
+
+### group_by()
+
+Group the `flights` dataset by `dest` and use `slice_max()` to find the most delayed flight for each destination.
+
+Use `group_by()` and `slice_max()` to select the row with the highest value in `arr_delay`.
+
+```{r groupby, exercise=TRUE}
+flights |> 
+  group_by(____) |> 
+  slice_max(____)
+
+
+```
+
+```{r groupby-hint, exercise=TRUE}
+# Use `group_by(dest)` first, then `slice_max(arr_delay, n = 1)` to find the highest delay per group.
+
+
+```
+
+
   
 ## Importing data
 
 data import (chapter 7)
 
 
-## Topic 2
 
-### Exercise with Hint
-
-*Here's an exercise where the chunk is pre-evaluated via the `exercise.eval` option (so the user can see the default output we'd like them to customize). We also add a "hint" to the correct solution via the chunk immediate below labeled `print-limit-hint`.*
-
-Modify the following code to limit the number of rows printed to 5:
-
-```{r print-limit, exercise=TRUE, exercise.eval=TRUE}
-mtcars
-```
-
-```{r print-limit-hint}
-head(mtcars)
-```
