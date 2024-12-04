@@ -149,6 +149,17 @@ quiz(
 )
 ```
 
+### Count: how many flights to a specific destination
+
+If you want to calculate how many flights there were between two destinations, you can use the `count()` function.
+Try it below. Once you have done that, you can also use an additional argument in the function, `sort`, in order to sort the result. Sort takes only the value TRUE or FALSE.
+
+```{r occ, exercise=TRUE}
+count(flights, ____, ____)
+
+
+```
+
 ## Importing data
 
 data import (chapter 7)
