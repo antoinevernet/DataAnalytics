@@ -127,10 +127,11 @@ The first argument is always a dataframe, and the output is also a dataframe.
 
 ### Distinct: Counting unique occurences
 
-
+The `disctinct()` function will help find all the unique rows. 
+It is specifically useful to find unique combinations of variables, for example, below, use distinct to find all the unique pairs of airports in the datasets (use the variables `origin` and `dest`):
 
 ```{r occ, exercise=TRUE}
-distinct(flights, origin, dest)
+distinct(flights, ____, ____)
 
 
 ```
