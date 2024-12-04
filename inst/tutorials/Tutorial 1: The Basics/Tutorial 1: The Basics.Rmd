@@ -11,16 +11,16 @@ library(dplyr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Tutorial 1: The basics
+## Tutorial 1: the basics
 
 This tutorial has three parts, all based on a different chapter of R for data science (https://r4ds.hadley.nz/).
 
-- The bases (chapter 2)
+- The basics (chapter 2)
 - data transformation (chapter 3)
 - data import (chapter 7)
 
 
-## The bases
+## The basics
 
 This first part of the tutorial walks you through the bases of programming in R, it roughly follows the second chapter of R for data science.
 
@@ -154,27 +154,96 @@ quiz(
 If you want to calculate how many flights there were between two destinations, you can use the `count()` function.
 Try it below. Once you have done that, you can also use an additional argument in the function, `sort`, in order to sort the result. Sort takes only the value TRUE or FALSE.
 
-```{r occ, exercise=TRUE}
+```{r count, exercise=TRUE}
 count(flights, ____, ____)
 
 
 ```
 
+We now move on to functions that allow you to do operations on columns.
+
+### Mutate: the workhorse of data wrangling
+
+The function `mutate()` allows you to compute new variables for your dataset.
+For example, in the `flights` data, you can compute the speed of the aircraft during a specific flight by using the `distance` and the `air_time` variables, keep in mind that air_time is in minutes.
+
+```{r mut, exercise=TRUE}
+mutate(flights, speed = )
+
+```
+
+```{r mut-hint}
+mutate(flights, speed = ____ / ____)
+
+```
+
+### Select: retain only the columns you need
+
+The function `select` allows you to only retain the columns you need for the computation at hand.
+
+Use the `flights` dataset to select the columns: year, month, and day. 
+
+```{r select, exercise=TRUE}
+select(flights, ____)
+  # YOUR CODE HERE
+
+```
+
+```{r select-hint}
+select(flights, ____)
+
+# pass year, month, and day as arguments
+
+```
+
+
+Select all columns between year and day (inclusive), you can do this using the `:` operator.
+
+```{r select2, exercise=TRUE}
+select(flight, ____)
+
+```
+
+```{r select2-hint}
+# Use `year:day` inside `select()` to select the range.
+
+```
+
+### Rename a column
+
+Rename the column 'tailnum' to 'tail_num'. 
+Use `select()` with a new name for the column on the left-hand side of `=`.
+```{r renam, exercise=TRUE}
+flights |> 
+  # YOUR CODE HERE
+```
+
+```{r renam-hint}
+# Use `select(new_name = old_name)` to rename columns while selecting.
+
+```
+
+
+
+### relocate()
+
+Move the 'time_hour' column to the beginning of the dataset.
+
+```{r reloc, exercise=TRUE}
+flights |> 
+  # YOUR CODE HERE
+```
+
+```{r reloc-hint}
+# Use `relocate()` and specify the variable name.
+
+```
+
+  
 ## Importing data
 
 data import (chapter 7)
 
-### Exercise with Code
-
-*Here's an exercise with some prepopulated code as well as `exercise.lines = 5` to provide a bit more initial room to work.*
-
-Now write a function that adds any two numbers and then call it:
-
-```{r add-function, exercise=TRUE, exercise.lines = 5}
-add <- function() {
-  
-}
-```
 
 ## Topic 2
 
