@@ -6,72 +6,72 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(ggplot2)
+library(dplyr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
 ## Introduction
 
+Looking at our data is a fundamental first step when starting any analysis. To do this we will create plots. In this tutorial, we will learn how to create plots using the package `ggplot2`.
+We will use the data on the British Social Attitudes Survey (BSA) that we used in the previous tutorial and recreate the following plot:
 
 
-### Exercise 
+```{r plotex, message=FALSE, warning=FALSE}
+bsa <- readRDS("./data/bsa2021_healthcare_equalities_recoded.rds")
 
-*Here's a simple exercise with an empty code chunk provided for entering the answer.*
+bsa <- bsa |> mutate(welfare2 = if_else(welfare2 == 9, NA, welfare2),
+                     leftrigh = if_else(leftrigh == 9, NA, leftrigh))
+ggplot(data = bsa, aes(x=leftrigh, y=welfare2)) + 
+  geom_point(aes(shape = DVSex21), alpha=0.05) +
+  geom_smooth(method = "loess", se = FALSE) +
+  labs(title = "Welfare perception by political orientation",
+       x = "Political orientation\n(1 = left, 5 = right)",
+       y = "Welfare perception\n(1 = sympathetic, 5 = poor don't deserve)") +
+  guides(shape = guide_legend(title = "Sex"))
+```
 
-Write the R code required to add two plus two:
+We will start by loading the data and then create a simple plot using the package `ggplot2`, then we will start on the main task of this tutorial: recreating the plot above.
 
-```{r two-plus-two, exercise=TRUE}
+
+### Loading the BSA data
+
+Remember the British Social Attitudes data from the previous tutorial? We will work with this data in this tutorial, so let's start by loading it.
+The data to load is the RDS version of this data
+
+Write the R code required:
+
+```{r loaddta, exercise=TRUE}
+bsa <- ____
+```
+
+```{r loaddta-solution}
+bsa <- readRDS("./data/bsa2021_healthcare_equalities_recoded.rds")
+```
+
+## Your very first plot!
+
+With this data loaded, we will create our very first plot using the package `ggplot2`.
+
+
+```{r ggplot1, exercise=TRUE, exercise.setup="loaddta-solution"}
+library(ggplot2)
+
+ggplot(data = bsa, aes(x=leftrigh, y=welfare2)) + 
+  geom_point()
+
 
 ```
 
-### Exercise with Code
+## ggplot
 
-*Here's an exercise with some prepopulated code as well as `exercise.lines = 5` to provide a bit more initial room to work.*
+### What is in a layer?
 
-Now write a function that adds any two numbers and then call it:
+## Building the example plot
 
-```{r add-function, exercise=TRUE, exercise.lines = 5}
-add <- function() {
-  
-}
+```{r print-limit, exercise=TRUE}
+
 ```
 
-## Topic 2
-
-### Exercise with Hint
-
-*Here's an exercise where the chunk is pre-evaluated via the `exercise.eval` option (so the user can see the default output we'd like them to customize). We also add a "hint" to the correct solution via the chunk immediate below labeled `print-limit-hint`.*
-
-Modify the following code to limit the number of rows printed to 5:
-
-```{r print-limit, exercise=TRUE, exercise.eval=TRUE}
-mtcars
-```
-
-```{r print-limit-hint}
-head(mtcars)
-```
-
-### Quiz
-
-*You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
-
-Some questions to verify that you understand the purposes of various base and recommended R packages:
-
-```{r quiz}
-quiz(
-  question("Which package contains functions for installing other R packages?",
-    answer("base"),
-    answer("tools"),
-    answer("utils", correct = TRUE),
-    answer("codetools")
-  ),
-  question("Which of the R packages listed below are used to create plots?",
-    answer("lattice", correct = TRUE),
-    answer("tools"),
-    answer("stats"),
-    answer("grid", correct = TRUE)
-  )
-)
-```
 
