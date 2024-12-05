@@ -64,7 +64,6 @@ Tutorial 1: The basics
 - data transformation (chapter 3 of R4DS) dplyr on rows and column, the pipe, groups
 - data import (chapter 7)
 
-Link...
 
 Tutorial 2: Basic Visualisation
 
@@ -72,7 +71,6 @@ Tutorial 2: Basic Visualisation
 - exploratory data analysis (chapter 10 r4ds)
 - labels, legends (chapter 11)
 
-Link...
 
 Tutorial 3: Types
 
