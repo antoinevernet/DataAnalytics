@@ -90,6 +90,8 @@ Tutorial 6: descriptive analysis
 
 Tutorial 7: Regression basics
 
+Tutorial 8: Data is dirty
+
 Does the causal inference from here needs its own package?
 
 Tutorial 8: Adjusting for confounders
