@@ -86,6 +86,22 @@ Tutorial 5: functions, iteration
 
 Link...
 
+Tutorial 6: descriptive analysis
+
+Tutorial 7: Regression basics
+
+Does the causal inference from here needs its own package?
+
+Tutorial 8: Adjusting for confounders
+
+Tutorial 9: Instrumental variables
+
+The social network tutorials need their own package?
+Tutorial 8: Social Network Analysis basics
+
+Tutorial 9: Network visualisation
+
+
 
 The rest of this tutorial walks you through installing R and RStudio and demonstrates how the tutorials work.
 
