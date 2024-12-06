@@ -116,7 +116,7 @@ ggplot(data = bsa, aes(x=leftrigh, y=welfare2)) +
 
 
 
-## Building the example plot
+## Building the example plot {data-progressive=TRUE}
 
 You know have a better understanding of the different components needed to make a plot using `ggplot2`. Let's now recreate the plot we showed at the beginning of the tutorial (reproduced below for ease of reference).
 
@@ -140,6 +140,8 @@ Both our leftrigh and our welfare2 variables have some values outside of the ran
 
 This tells us that missing values have been coded as 9. Coding missing values as 9, 99, or 999 when it is a value out of the range of the values of the variable was a common practice. In fact, a lot of national statistic still do this, and code all the answers to their surveys like it is 1985. The British Social Attitudes survey is no exception, and the only reason the data you have seen is in a human readable form, is because we recoded it before giving it to you to work with to make your life easier.
 
+### Recoding
+
 The first thing we need to do then, is to recode these values to make them into missing values that R recognises as such.
 In order to do this, we can use some of the functions we learned about in the previous tutorial that come with the `dplyr` package. We can use the `mutate()` and the `ifelse` functions to create a new variable that is the same as the old one, but with the values of 9 replaced with `NA`. We can do this for both the `leftrigh` and the `welfare2` variables. You can get help on both of these function by using `?` followed by the function name.
 
@@ -161,6 +163,8 @@ bsa <- bsa |> mutate(welfare2 = if_else(welfare2 == 9, NA, welfare2),
 ```
 
 
+### Adding layers
+
 Now that we removed the missing values, we can start making the plot look nicer. The first thing to do is to add all the geoms that we want to see in the final plot. We already have `geom_point`, but in the finished plots, we also controlled the shape of the points based on the sex of the respondents, finally we also played with transparency. Then we had also added another geom: `geom_smooth`. In order to complete the plot, add the right argument inside the aes of `geom_point`. Keep in mind that you can check what is in the data by using the name of the data object to display it (`bsa`) or using the `head()` function.
 
 ```{r finplot, message=FALSE, warning=FALSE, exercise=TRUE, exercise.setup="recode-solution"}
@@ -172,7 +176,25 @@ ggplot(data = bsa, aes(x=leftrigh, y=welfare2)) +
 ```
 
 
-```{r finplot-solution, message=FALSE, warning=FALSE}
+### Labels
+
+Now that we have all the elements on the plot, we can focus on the labels for the axis and the legend.
+You can use the `labs()` function to add the title and the labels for the x and y axis. You can also use the `guides()` function to add a title to the legend. Add the right arguments to the `labs()` and `guides()` functions to make the plot look like the one at the beginning of the tutorial.
+
+```{r finplot2, message=FALSE, warning=FALSE, exercise=TRUE, exercise.setup="recode-solution"}
+
+ggplot(data = bsa, aes(x=leftrigh, y=welfare2)) + 
+  geom_point(aes(shape = DVSex21), alpha=0.05) +
+  geom_smooth(method = "loess", se = FALSE) +
+  ____(____ = "Welfare perception by political orientation",
+       ____ = "Political orientation\n(1 = left, 5 = right)",
+       ____ = "Welfare perception\n(1 = sympathetic, 5 = poor don't deserve)") +
+  guides(shape = guide_legend(title = "Sex"))
+
+```
+
+
+```{r finplot2-solution, message=FALSE, warning=FALSE}
 
 ggplot(data = bsa, aes(x=leftrigh, y=welfare2)) + 
   geom_point(aes(shape = DVSex21), alpha=0.05) +
@@ -181,6 +203,39 @@ ggplot(data = bsa, aes(x=leftrigh, y=welfare2)) +
        x = "Political orientation\n(1 = left, 5 = right)",
        y = "Welfare perception\n(1 = sympathetic, 5 = poor don't deserve)") +
   guides(shape = guide_legend(title = "Sex"))
+
+```
+
+Well done for making it to the end of this tutorial. 
+
+
+### Bonus track
+
+What if we were to facet the graph, instead of using shapes?
+
+```{r finplot3, message=FALSE, warning=FALSE, exercise=TRUE, exercise.setup="recode-solution"}
+
+ggplot(data = bsa, aes(x=leftrigh, y=welfare2)) + 
+  geom_point(alpha=0.05) +
+  geom_smooth(method = "loess", se = FALSE) +
+  labs(title = "Welfare perception by political orientation",
+       x = "Political orientation\n(1 = left, 5 = right)",
+       y = "Welfare perception\n(1 = sympathetic, 5 = poor don't deserve)") +
+  ____(~DVSex21)
+
 ```
 
 
+```{r finplot3-solution, message=FALSE, warning=FALSE}
+
+ggplot(data = bsa, aes(x=leftrigh, y=welfare2)) + 
+  geom_point(alpha=0.05) +
+  geom_smooth(method = "loess", se = FALSE) +
+  labs(title = "Welfare perception by political orientation",
+       x = "Political orientation\n(1 = left, 5 = right)",
+       y = "Welfare perception\n(1 = sympathetic, 5 = poor don't deserve)") +
+  facet_wrap(~DVSex21)
+
+```
+
+Well done for finishing this tutorial!
