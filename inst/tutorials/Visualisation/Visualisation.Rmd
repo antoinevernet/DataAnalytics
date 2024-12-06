@@ -15,8 +15,8 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Introduction
 
 Looking at our data is a fundamental first step when starting any analysis. To do this we will create plots. In this tutorial, we will learn how to create plots using the package `ggplot2`.
-We will use the data on the British Social Attitudes Survey (BSA) that we used in the previous tutorial and recreate the following plot:
-
+We will use the data on the British Social Attitudes Survey (BSA) that we used in the previous tutorial.
+We will use plots to look at the data and explore the relationship between political orientation and opinion about welfare. The plot below is one way to visualise this relationship. We will work through recreating this plot in the rest of the tutorial.
 
 ```{r plotex, message=FALSE, warning=FALSE}
 bsa <- readRDS("./data/bsa2021_healthcare_equalities_recoded.rds")
@@ -53,9 +53,26 @@ bsa <- readRDS("./data/bsa2021_healthcare_equalities_recoded.rds")
 ## Your very first plot!
 
 With this data loaded, we will create our very first plot using the package `ggplot2`.
-
+You can indicate the data to use in the `ggplot()` function, and then specify the aesthetics of the plot in the `aes()` function: x is for the variable in the x axis, y for the one in the y axis.
 
 ```{r ggplot1, exercise=TRUE, exercise.setup="loaddta-solution"}
+library(ggplot2)
+
+ggplot(data = ____, aes(x=____, y=____)) + 
+  geom_point()
+
+
+```
+
+```{r ggplot1-hint}
+library(ggplot2)
+
+ggplot(data = bsa, aes(x=____, y=____)) + 
+  geom_point()
+
+```
+
+```{r ggplot1-solution}
 library(ggplot2)
 
 ggplot(data = bsa, aes(x=leftrigh, y=welfare2)) + 
@@ -64,13 +81,68 @@ ggplot(data = bsa, aes(x=leftrigh, y=welfare2)) +
 
 ```
 
+As you can tell, it does not look like the initial plot. Before we move on to recreating that plot, let's examine the building blocks of a `ggplot` plot.
+
+
 ## ggplot
+
+There are three main components to a `ggplot` graph: data, aesthetics, and geometries. The data provides the data frame to use, the aesthetics tells the which variables are mapped on which dimension (x, y, colour, shape, linetype), and the geometries are what is displayed using the data and the mapping (scatterplot, boxplot, etc).
+
+### Data and mapping
+
+Run the code to see what it produces.
+
+```{r ggplot2, exercise=TRUE, exercise.setup="loaddta-solution"}
+
+ggplot(data = bsa, aes(x=leftrigh, y=welfare2))
+
+
+```
+
+As you can see, this code only creates the canvas for the plot. We need to add at least one geometry to see the data.
 
 ### What is in a layer?
 
+Adding the geometries adds layers to the plot. 
+Add a layer to the plot with the `geom_point()` function to see the data points. You can also try adding another geometry, for example, `geom_smooth()`. You can also try adding both together. You'll see that depending which one you plot first, you will get a slightly different result as layers are plotted on top of one another in the order you add them to the plot.
+
+```{r ggplot3, exercise=TRUE, exercise.setup="loaddta-solution"}
+
+ggplot(data = bsa, aes(x=leftrigh, y=welfare2)) + 
+  ____
+
+
+```
+
+
+
 ## Building the example plot
 
-```{r print-limit, exercise=TRUE}
+You know have a better understanding of the different components needed to make a plot using `ggplot2`. Let's now recreate the plot we showed at the beginning of the tutorial (reproduced below for ease of reference).
+
+
+```{r, ref.label = "plotex", warning=FALSE, message=FALSE}
+
+```
+
+If we have another look at our first plot from above, we can spot one obvious difference.
+
+```{r firstplot2, exercise=TRUE, echo=FALSE, warning=FALSE, message=FALSE, exercise.setup="loaddta-solution"}
+library(ggplot2)
+
+ggplot(data = bsa, aes(x=leftrigh, y=welfare2)) + 
+  geom_point()
+```
+
+Both our leftrigh and our welfare2 variables have some values outside of the range that we expect (1-5). On closer inspection, the value of these data points is 9. What do they mean? This is when we need to refer to the codebook, which comes with the data. The relevant passage is reproduced below:
+
+![](www/img/welfare2_bsa_codebook.png){#id .class width=50% height=50%}
+
+This tells us that missing values have been coded as 9. Coding missing values as 9, 99, or 999 when it is a value out of the range of the values of the variable was a common practice. In fact, a lot of national statistic still do this, and code all the answers to their surveys like it is 1985. The British Social Attitudes survey is no exception, and the only reason the data you have seen is in a human readable form, is because we recoded it before giving it to you to work with to make your life easier.
+
+The first thing we need to do then, is to recode these values to make them into missing values that R recognises as such.
+
+```{r t, exercise=TRUE}
 
 ```
 
