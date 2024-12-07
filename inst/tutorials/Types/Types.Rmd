@@ -6,6 +6,7 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(dplyr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -63,13 +64,34 @@ summary(bsa$auth)
 
 ```
 
-
-### Numeric vectors
+One of the great things you can do with logical vectors is use them to do Boolean algebra using the `&` (and), `|` (or), and `!` (not) operators.
 
 ### Thing you should know about vectors
 
+Vectors can only contain elements of the same type. If you try to create a vector with elements of different types, R will coerce them to the same type. So if you try to create a vector with a number and a character, R will coerce the number to a character.
+Use the `str()` function to check the type of the elements in the vector v below:
+
+```{r vecchar, exercise=TRUE}
+v <- c(1, "a", 2, 4)
+
+
+
+```
+
 
 ## Numbers
+
+R does not have scalars so uses vector of length 1 instead to represent single numbers
+
+```{r}
+v <- 1
+is.vector(v)
+
+mode(v)
+
+typeof(v)
+```
+
 
 ## Strings
 
