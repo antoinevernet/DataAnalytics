@@ -1,0 +1,37 @@
+---
+title: "Types"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Introduction
+
+In the previous tutorials, we jump right into working with data and glossed over a lot of the details. In this tutorial, we take a step back to consider what happens when we load data in memory: how does R represents that data internally and what that means for what we can do with it. We will also talk about how we can change the way R represents a specific piece of data so we can make what we want with it, be it a plot, a table, or a model.
+
+This tutorial draws heavily on [R for data science](https://r4ds.hadley.nz/transform) chapter 12 to 18. I highly recommend you refer to these chapters for more detailed explanation of any of the topics covered below.
+
+
+## Logical vectors
+
+A logical vector is a vector that can only contains three values: TRUE, FALSE, and NA (missing value).
+
+
+## Numbers
+
+## Strings
+
+## Regular expressions
+
+## Factors
+
+## Dates and times
+
+## Missing value
+
+
