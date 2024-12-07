@@ -48,6 +48,8 @@ two
 
 ```
 
+In most programming languages, the assignment is done with the `=` operator. If you use `=` in R, it will work (most of the time), but it is not the standard way, so make sure you use `<-`.
+
 
 ### the `c()` function
 

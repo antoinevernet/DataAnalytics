@@ -16,10 +16,57 @@ In the previous tutorials, we jump right into working with data and glossed over
 
 This tutorial draws heavily on [R for data science](https://r4ds.hadley.nz/transform) chapter 12 to 18. I highly recommend you refer to these chapters for more detailed explanation of any of the topics covered below.
 
+Let's jump in and talk about data structures. In order to manipulate data, programming languages use a number of data structures. They do not all have the same data structures and this can make it awkward when you code in more than one language. In R, the main data structures are vectors, lists, matrices, data frames, and factors. We will cover each of these in turn. Before we jump in, let's just note that R does not have a type for scalars, a single number, in R a scalar is just a vector of length 1.
 
-## Logical vectors
+## Vectors
+
+A vector is a uni-dimensional data structure. It can contain elements of the same type. The most common types of vectors are logical, numeric, and character vectors.
+
+```{r, echo=TRUE}
+v <- c(1:5)
+v
+
+is.vector(v)
+```
+
+
+### Logical vectors
 
 A logical vector is a vector that can only contains three values: TRUE, FALSE, and NA (missing value).
+
+```{r, echo=TRUE}
+v <- c(TRUE, FALSE, TRUE, NA)
+v
+
+is.vector(v)
+```
+
+Very often logical vectors are used as a result of some operation on data and can be very useful to subset data.
+
+In the example below, use mutate to create the auth variable which checks whether a respondent scored above 3 on the libertarian to authoritarian scale (libauth variable).
+
+```{r logvec, exercise=TRUE}
+bsa <- readRDS("data/bsa2021_healthcare_equalities_recoded.rds")
+
+bsa <- ____ |> ____(auth = ____ >= ____)
+
+summary(bsa$auth)
+
+```
+
+```{r logvec-solution}
+bsa <- readRDS("data/bsa2021_healthcare_equalities_recoded.rds")
+
+bsa <- bsa |> mutate(auth = libauth >= 3)
+
+summary(bsa$auth)
+
+```
+
+
+### Numeric vectors
+
+### Thing you should know about vectors
 
 
 ## Numbers
