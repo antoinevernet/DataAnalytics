@@ -72,7 +72,7 @@ Tutorial 2: Basic Visualisation
 - labels, legends (chapter 11)
 
 
-Tutorial 3: Types
+Tutorial 3: Types and data structures
 
 Vectors, numbers, string, factors, dates, missing values
 

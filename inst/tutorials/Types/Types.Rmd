@@ -1,5 +1,5 @@
 ---
-title: "Types"
+title: "Data structures and types"
 output: learnr::tutorial
 runtime: shiny_prerendered
 ---
@@ -101,6 +101,107 @@ v <- 1
 ```
 
 
+
+## Matrices
+
+Matrices are two dimensional arrays
+
+```{r}
+matrix <- matrix(data = c(1:6), nrow = 2, byrow = TRUE)
+
+matrix
+```
+
+## Types
+
+Matrix and vectors can only hold data of one type.
+If you try to create a vector or matrix with data of different type, it will be of the type that allows to represent all elements of the matrix
+
+```{r}
+matrix1 <- matrix(data = c(1:6), nrow = 2, byrow = TRUE)
+matrix2 <- matrix(data = c(1, 2, 3, 4, 5, 3.14), nrow = 2, 
+                  byrow = TRUE)
+matrix3 <- matrix(data = c(1:5, "Marmalade"), nrow = 2, byrow = TRUE)
+```
+
+## Types (con't)
+
+```{r}
+matrix1
+matrix2
+matrix3
+```
+
+## Types (con't)
+
+
+```{r}
+typeof(matrix1)
+typeof(matrix2)
+typeof(matrix3)
+```
+
+## Data frame
+
+Data frames are two dimensional arrays (like matrices) but they can hold various types of data
+
+```{r}
+dt <- data.frame(name = c("Julia", "Simon", "Christina"), 
+                 age = c(24, 26, 19), 
+                 gender = c("Female", "Male", "Female"))
+dt
+```
+
+## Data frame (con't)
+
+Within each column, every element has to have the same type.
+
+There are two important function that are useful with data frames (and other types):
+`summary` and `str`
+
+```{r}
+summary(dt)
+
+```
+
+
+## Data frame (con't)
+
+```{r}
+
+str(dt)
+```
+
+
+## Lists
+
+Lists are very useful because of their flexibility, but this also makes them sometimes difficult to work with.
+
+Elements of a lists can be of any type (even list)
+
+```{r}
+l <- list(c(1:3), "Today", matrix(1:6, nrow = 2))
+l
+```
+
+## Accessing elements of a list
+
+Two ways: ``[[]]`` and `[]`, which do not produce the same result
+
+```{r}
+l[[1]]
+l[1]
+```
+## Accessing elements of a list (con't) 
+
+Two ways: ``[[]]`` and `[]`, which do not produce the same result
+
+```{r}
+typeof(l[[1]])
+typeof(l[1])
+```
+
+
 ## Strings
 
 ## Regular expressions
@@ -111,4 +212,47 @@ v <- 1
 
 ## Missing value
 
+R codes missing values as `NA`
+
+It also has codes for not-a-number: `NaN`
+
+And `NULL`
+
+Think carefully about these when you are using/writing functions as they might not all evaluate to the same result.
+
+
+## Packages
+
+Much of R strength rely on the ecosystem of packages that it comes with.
+
+In many languages, library is the term used to describe what an R package is (confusingly, you load a package in memory using the function `library()`).
+
+What is a package? 
+
+It is a collection of functions that allow you to perform specific types of operations, usually because they are not available among the functions the software comes prepackaged with.
+
+R has packages for tasks like data loading, data wrangling, visualisation, modelling and many more tasks.
+
+## Installing packages
+
+Packages are installed with the function `install.packages()` and updated with `update.packages()`
+
+```{r, eval = FALSE}
+install.packages("name of the package")
+install.packages(c("package_1", "package_2"))
+
+```
+
+Once you have installed a package, you need to load it before you can use the functions in it.
+
+```{r, eval = FALSE}
+library(name_of_the_package)
+
+# What most people do (me included) 
+function_from_package(args)
+
+# What you should do in your scripts
+# This is safe if two packages have a function with the same name
+name_of_the_package::function_from_package(args)
+```
 
