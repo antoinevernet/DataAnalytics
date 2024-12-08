@@ -17,7 +17,9 @@ In the previous tutorials, we jump right into working with data and glossed over
 
 This tutorial draws heavily on [R for data science](https://r4ds.hadley.nz/transform) chapter 12 to 18. I highly recommend you refer to these chapters for more detailed explanation of any of the topics covered below.
 
-Let's jump in and talk about data structures. In order to manipulate data, programming languages use a number of data structures. They do not all have the same data structures and this can make it awkward when you code in more than one language. In R, the main data structures are vectors, lists, matrices, data frames, and factors. We will cover each of these in turn. Before we jump in, let's just note that R does not have a type for scalars, a single number, in R a scalar is just a vector of length 1.
+Let's jump in and talk about data structures. In order to manipulate data, programming languages use a number of data structures. They do not all have the same data structures and this can make it awkward when you code in more than one language. In R, the main data structures are vectors, lists, matrices, and data frames. We will cover each of these in turn. 
+While we talk about data structures, we will also talk about types, types describe how data is stored in memory and what operations can be performed on it. In R, the main types are logical, integer, double, character, and factor. We will cover these at the same time we cover data structure. A useful reference for an in-depth presentation of both is the [Advanced R book](https://adv-r.hadley.nz/) (specifically chapter 3 Vectors).
+Before we jump in, let's just note that R does not have a data structure for scalars, a single number, in R a scalar is just a vector of length 1.
 
 ## Vectors
 
@@ -66,6 +68,15 @@ summary(bsa$auth)
 
 One of the great things you can do with logical vectors is use them to do Boolean algebra using the `&` (and), `|` (or), and `!` (not) operators.
 
+Another operator that is useful and generate logical vectors as a result is the `%in%` operator. This operator checks whether the elements of the first vector are in the second vector. Use `%in%` in the code below to see how it works:
+
+```{r in, exercise=TRUE}
+1:12 ____ c(1, 3, 5, 7, 9, 11)
+
+
+```
+
+
 ### Thing you should know about vectors
 
 Vectors can only contain elements of the same type. If you try to create a vector with elements of different types, R will coerce them to the same type. So if you try to create a vector with a number and a character, R will coerce the number to a character.
@@ -81,15 +92,12 @@ v <- c(1, "a", 2, 4)
 
 ## Numbers
 
-R does not have scalars so uses vector of length 1 instead to represent single numbers
+R does not have scalars so uses vector of length 1 instead to represent single numbers.
+Use the `is.vector()`, `mode()`, and `typeof()` functions to check the type of the variable v below:
 
-```{r}
+```{r scalar, exercise=TRUE}}
 v <- 1
-is.vector(v)
 
-mode(v)
-
-typeof(v)
 ```
 
 
