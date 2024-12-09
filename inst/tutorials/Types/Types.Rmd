@@ -95,7 +95,7 @@ v <- c(1, "a", 2, 4)
 R does not have scalars so uses vector of length 1 instead to represent single numbers.
 Use the `is.vector()`, `mode()`, and `typeof()` functions to check the type of the variable v below:
 
-```{r scalar, exercise=TRUE}}
+```{r scalar, exercise=TRUE}
 v <- 1
 
 ```
@@ -104,74 +104,78 @@ v <- 1
 
 ## Matrices
 
-Matrices are two dimensional arrays
+Matrices are two dimensional arrays.
+Type the name of the matrix and run the code to see it.
 
-```{r}
+```{r mat, exercise=TRUE}
 matrix <- matrix(data = c(1:6), nrow = 2, byrow = TRUE)
 
-matrix
+____
+
 ```
 
-## Types
+### Types
 
 Matrix and vectors can only hold data of one type.
-If you try to create a vector or matrix with data of different type, it will be of the type that allows to represent all elements of the matrix
+If you try to create a vector or matrix with data of different type, it will be of the type that allows to represent all elements of the matrix.
+Look at the matrices below to see what type they are. You can type their name to see how they are displayed, and also use the function `typeof()` to see their type.
 
-```{r}
+```{r mattype, exercise=TRUE}
 matrix1 <- matrix(data = c(1:6), nrow = 2, byrow = TRUE)
 matrix2 <- matrix(data = c(1, 2, 3, 4, 5, 3.14), nrow = 2, 
                   byrow = TRUE)
 matrix3 <- matrix(data = c(1:5, "Marmalade"), nrow = 2, byrow = TRUE)
+
+____
+
 ```
 
-## Types (con't)
-
-```{r}
-matrix1
-matrix2
-matrix3
-```
-
-## Types (con't)
-
-
-```{r}
-typeof(matrix1)
-typeof(matrix2)
-typeof(matrix3)
-```
 
 ## Data frame
 
-Data frames are two dimensional arrays (like matrices) but they can hold various types of data
+Data frames are two dimensional arrays (like matrices) but they can hold various types of data.
+Display the data frame below to see what it looks like.
 
-```{r}
+```{r df, exercise=TRUE}
 dt <- data.frame(name = c("Julia", "Simon", "Christina"), 
                  age = c(24, 26, 19), 
-                 gender = c("Female", "Male", "Female"))
-dt
+                 sex = c("Female", "Male", "Female"))
+
+____
+
 ```
 
-## Data frame (con't)
+```{r df-solution}
+dt <- data.frame(name = c("Julia", "Simon", "Christina"), 
+                 age = c(24, 26, 19), 
+                 sex = c("Female", "Male", "Female"))
+
+dt
+
+```
 
 Within each column, every element has to have the same type.
 
 There are two important function that are useful with data frames (and other types):
-`summary` and `str`
+`summary` and `str`, use them below.
 
-```{r}
-summary(dt)
+```{r df2, exercise=TRUE, exercise.setup="df-solution"}
+
+____(dt)
+
+____(dt)
 
 ```
 
+Internally, data frames are lists of vectors. This means that you can access the columns of a data frame using the `$` operator or the `[[` operator. Try accessing the age column of the dt data frame below:
 
-## Data frame (con't)
+```{r df3, exercise=TRUE, exercise.setup="df-solution"}
 
-```{r}
+____$____
 
-str(dt)
+____[["____"]]
+
 ```
-
 
 ## Lists
 
@@ -184,7 +188,7 @@ l <- list(c(1:3), "Today", matrix(1:6, nrow = 2))
 l
 ```
 
-## Accessing elements of a list
+### Accessing elements of a list
 
 Two ways: ``[[]]`` and `[]`, which do not produce the same result
 
@@ -192,7 +196,8 @@ Two ways: ``[[]]`` and `[]`, which do not produce the same result
 l[[1]]
 l[1]
 ```
-## Accessing elements of a list (con't) 
+
+
 
 Two ways: ``[[]]`` and `[]`, which do not produce the same result
 
