@@ -88,11 +88,28 @@ Link...
 
 Tutorial 6: descriptive analysis
 
+More data wrangling using bsa data and babynames.
+Things like pivot_wider, pivot_longer and join, plus some more mutate and friends.
+
+Link...
+
+
 Tutorial 7: Regression basics
+
+Is bsa still the right dataset for that?
+- linear regression
+
 
 Tutorial 8: Data is dirty
 
 Does the causal inference from here needs its own package?
+
+Tutorial: More types of regression
+- logistic regression
+- model diagnostics
+- model selection
+
+
 
 Tutorial 8: Adjusting for confounders
 
