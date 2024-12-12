@@ -224,6 +224,7 @@ string2 <- ___
 
 ### What Are Escape Characters?
 Escape characters allow you to include special characters in strings. Common examples include:
+
 - `\` for backslash
 - `"` for double quotes
 - `\'` for single quotes
@@ -269,12 +270,13 @@ Write a raw string for a file path:
 # Create a raw string for a file path (it does not need to be an actual path, you can make up one in this instance)
 my_path <- ___
 
-print(my_path)
+my_path
 ```
 
 
-### Question 1
-What is the output of the following code?
+### Quiz
+
+QUESTIONS NOT GREAT - NEED BETTER ONES
 
 ```{r, echo=TRUE, eval=FALSE}
 print("This is a \"quote\".")
@@ -288,9 +290,9 @@ quiz(
     answer("This is a 'quote'.")
   ),
   question("Which syntax correctly creates a string containing a file path?",
-    answer("C:\\\\Users\\\\Documents", correct = TRUE),
-    answer("C:\\Users\\Documents"),
-    answer("r\"(C:\\Users\\Documents)\"")
+    answer(r"("C:\\\\Users\\\\Documents")", correct = TRUE),
+    answer(r"("C:\\Users\\Documents")"),
+    answer(r"(r\"(C:\\Users\\Documents)\")")
   )
 )
 ```
@@ -349,16 +351,16 @@ result
 ```
 
 
-### Quiz
 
-```{r quiz3}
+
+```{r quiz2}
 quiz(
   question("What does the `sep` argument in `str_c()` do?",
     answer("Replaces missing values."),
     answer("Controls the separator between strings.", correct = TRUE),
     answer("Collapses multiple strings into one.")
   ),
-  question("What is the output of the following code?/n```{r}\nlibrary(stringr)\nstr_c(\"Data\", \"Science\", sep = \"-\")\n```",
+  question("What is the output of the following code? `str_c(\"Data\", \"Science\", sep = \"-\")`",
     answer("Data-Science", correct = TRUE),
     answer("DataScience"),
     answer("NA")
