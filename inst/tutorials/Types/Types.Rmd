@@ -368,6 +368,158 @@ quiz(
 )
 ```
 
+
+### Extracting and Modifying Strings
+
+Use `str_sub()` to extract parts of a string by specifying the start and end positions.
+
+### Example
+```{r}
+# Extract characters 1 to 5
+substring <- str_sub("Learning R is fun!", 1, 5)
+
+substring
+```
+
+### Extract Substrings
+Extract the word "Learning" from the string:
+
+```{r substring, exercise = TRUE}
+text <- "Learning R is fun!"
+word <- str_sub(text, ___, ___)
+
+word
+```
+
+
+### Replacing Substrings
+Use `str_replace()` or `str_replace_all()` to replace parts of a string.
+
+### Example
+```{r}
+# Replace "fun" with "awesome"
+replaced <- str_replace("Learning R is fun!", "fun", "awesome")
+
+replaced
+```
+
+
+Replace "R" with "data science" in the following string:
+
+```{r replacetext, exercise = TRUE}
+text <- "Learning R is fun!"
+updated_text <- str_replace(text, ___, ___)
+
+updated_text
+
+```
+
+### Splitting Strings
+
+Use `str_split()` to divide a string into parts based on a pattern.
+
+### Example
+```{r}
+# Split a sentence into words
+words <- str_split("Learning R is fun!", " ")
+
+words
+```
+
+Split the following string into individual words:
+
+```{r splitstring, exercise = TRUE}
+text <- "Learning R is fun!"
+words <- str_split(text, ___)
+
+words
+```
+
+### Joining Strings
+
+Use `str_flatten()` to join a list of strings into one string.
+
+### Example
+```{r}
+# Join words into a sentence
+sentence <- str_flatten(c("Learning", "R", "is", "fun!"), " ")
+
+sentence
+```
+
+Join the following words into a sentence:
+
+```{r flatten, exercise = TRUE}
+words <- c("Learning", "R", "is", "fun!")
+sentence <- str_flatten(words, ___)
+
+sentence
+```
+
+
+### Working with Unicode Characters
+
+Handle strings with special characters or different encodings.
+
+### Example
+```{r}
+# String with Unicode characters
+unicode_text <- "Hello, \u4E16\u754C" # "Hello, World" in Mandarin
+
+unicode_text
+```
+
+### Exercise: Unicode Strings
+
+Create a string with Unicode characters:
+
+```{r unicode, exercise = TRUE}
+# Create a Unicode string
+text <- "\u0048\u0065\u006C\u006C\u006F" # "Hello"
+
+text
+```
+
+
+### Locale-Sensitive Operations
+Sort or transform strings based on locale-specific rules.
+
+
+```{r}
+# Sort strings in a specific locale
+library(stringi)
+words <- c("ångstrom", "apple", "Ångström")
+sorted <- stri_sort(words, locale = "sv") # Swedish locale
+
+sorted
+```
+
+### Locale-Sensitive Sorting
+
+Sort the following words using a specified locale:
+
+```{r locale, exercise = TRUE}
+words <- c("zebra", "apple", "banana")
+sorted <- stri_sort(words, ___)
+
+sorted
+```
+
+```{r quiz3}
+quiz(
+  question("Which function is used to extract substrings from a string?",
+    answer("str_flatten()"),
+    answer("str_split()"),
+    answer("str_sub()", correct = TRUE)
+  ),
+  question("What does the `str_replace_all()` function do?",
+    answer("Splits a string into parts."),
+    answer("Joins a list of strings into one."),
+    answer("Replaces all occurrences of a pattern in a string.", correct = TRUE)
+  )
+)
+```
+
   
 ## Regular expressions
 
