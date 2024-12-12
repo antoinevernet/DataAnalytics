@@ -523,9 +523,13 @@ quiz(
   
 ## Regular expressions
 
+
+
+
 ## Factors
 
 ## Dates and times
+
 
 ## Missing value
 
@@ -572,4 +576,10 @@ function_from_package(args)
 # This is safe if two packages have a function with the same name
 name_of_the_package::function_from_package(args)
 ```
+
+
+### Congratulations
+
+Congratulations! You have learned a lot in this tutorial! Well done for sticky with it until the end.
+
 
