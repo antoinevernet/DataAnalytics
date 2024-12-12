@@ -7,6 +7,8 @@ runtime: shiny_prerendered
 ```{r setup, include=FALSE}
 library(learnr)
 library(dplyr)
+library(stringr)
+
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -192,11 +194,179 @@ l____
 ```
 
 
-We have now covered the basics data structures that you are likely to encounter in the course of doing data analysis. We will now switch to looking at some of the data types that
+We have now covered the basics data structures that you are likely to encounter in the course of doing data analysis. We will now switch to looking at some of the data types that R uses to represent data in memory.
 
 
 ## Strings
 
+In this section of the tutorial, you will learn the basics of working with strings in R, including creating strings, using escape characters, and working with raw strings.
+
+### Strings in R
+Strings in R are text enclosed in single (`'`) or double (`"`) quotes.
+
+```{r, echo=TRUE}
+# Examples of strings
+string1 <- "Hello, R!"
+string2 <- 'Let\'s learn! This string contains two "quirks"!'
+```
+
+Notice how you can use escape characters (like `\'`) to include special symbols within your strings. We also use single quotes to enclose the string when it contains double quotes and vice versa.
+
+Fill in the blanks to create valid strings:
+
+```{r string, exercise = TRUE}
+# Create strings using single and double quotes
+string1 <- ___
+string2 <- ___
+
+```
+
+
+### What Are Escape Characters?
+Escape characters allow you to include special characters in strings. Common examples include:
+- `\` for backslash
+- `"` for double quotes
+- `\'` for single quotes
+- `\n` for a new line
+- `\t` for a tab
+
+### Example
+```{r, echo=TRUE}
+escaped_string <- "He said, \"Learn R!\""
+
+escaped_string
+```
+
+### Practice with Escape Characters
+
+Write a string that spans two lines and includes a quote:
+
+```{r escapechar, exercise = TRUE}
+# Create a string with a new line and a quote
+multi_line_string <- ___
+
+multi_line_string
+```
+
+
+
+### Raw Strings
+
+Raw strings (`r""`) are useful when you want to avoid interpreting escape sequences, such as in file paths or regular expressions.
+
+### Example
+```{r, echo=TRUE}
+raw_string <- r"(C:\Users\Name)"
+
+raw_string
+```
+
+### Exercise: Create a Raw String
+
+Write a raw string for a file path:
+
+```{r rawstring, exercise = TRUE}
+# Create a raw string for a file path (it does not need to be an actual path, you can make up one in this instance)
+my_path <- ___
+
+print(my_path)
+```
+
+
+### Question 1
+What is the output of the following code?
+
+```{r, echo=TRUE, eval=FALSE}
+print("This is a \"quote\".")
+```
+
+```{r quiz1}
+quiz(
+  question("What is the output of the code above?",
+    answer("Error"),
+    answer('This is a \"quote\".', correct = TRUE),
+    answer("This is a 'quote'.")
+  ),
+  question("Which syntax correctly creates a string containing a file path?",
+    answer("C:\\\\Users\\\\Documents", correct = TRUE),
+    answer("C:\\Users\\Documents"),
+    answer("r\"(C:\\Users\\Documents)\"")
+  )
+)
+```
+
+
+### Combining Strings
+
+The `str_c()` function from the `stringr` package is used to combine multiple strings.
+
+### Example
+```{r, echo=TRUE}
+library(stringr)
+combined <- str_c("Hello", "world", sep = ", ")
+print(combined)
+```
+
+### Combine Strings
+Combine the following words into a single string, separated by a space:
+
+```{r comb_s, exercise = TRUE}
+# Combine strings
+word1 <- "Learning"
+word2 <- "R"
+word3 <- "is"
+word4 <- "fun!"
+combined <- str_c(___, ___, ___, ___, sep = " ")
+
+combined
+```
+
+
+### Handling Missing Values
+By default, `str_c()` does not replace `NA` with "NA" when combining strings, and missing values are contagious.
+
+### Example
+```{r, echo=TRUE}
+with_na <- str_c("Hello", NA, "world")
+without_na <- str_c(str_replace_na(c("Hello", NA, "world")))
+
+with_na
+
+without_na
+```
+
+### Manage Missing Values
+Combine the following strings and deal with `NA` values:
+
+```{r missingvalue, exercise = TRUE}
+# Manage missing values
+part1 <- "Learning"
+part2 <- NA
+part3 <- "R"
+result <- str_c(part1, part2, part3)
+
+result
+```
+
+
+### Quiz
+
+```{r quiz3}
+quiz(
+  question("What does the `sep` argument in `str_c()` do?",
+    answer("Replaces missing values."),
+    answer("Controls the separator between strings.", correct = TRUE),
+    answer("Collapses multiple strings into one.")
+  ),
+  question("What is the output of the following code?/n```{r}\nlibrary(stringr)\nstr_c(\"Data\", \"Science\", sep = \"-\")\n```",
+    answer("Data-Science", correct = TRUE),
+    answer("DataScience"),
+    answer("NA")
+  )
+)
+```
+
+  
 ## Regular expressions
 
 ## Factors
