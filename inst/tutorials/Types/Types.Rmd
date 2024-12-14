@@ -523,7 +523,191 @@ quiz(
   
 ## Regular expressions
 
+### What are Regular Expressions?
+Regular expressions are sequences of characters that define a search pattern. They are widely used for string matching and manipulation.
 
+### Key Functions
+- `str_view()` and `str_view_all()`: Visualize regex matches in strings.
+
+### Example
+```{r}
+library(stringr)
+strings <- c("apple", "banana", "pear")
+str_view(strings, "a")
+```
+
+### Find a Pattern
+Use `str_view()` to visualize all occurrences of the letter "p" in the following strings:
+
+```{r strview, exercise = TRUE}
+strings <- c("apple", "banana", "pear")
+str_view(strings, ___)
+```
+
+
+### Basic Regex Patterns
+
+
+
+### Literal Characters
+Match exact characters in strings.
+
+### Example
+```{r}
+str_view(c("cat", "bat", "rat"), "cat")
+```
+
+### Metacharacters
+Characters with special meanings, such as `.`, `*`, `+`, `?`, and `[]`.
+
+### Example
+```{r}
+str_view(c("cat", "bat", "rat"), "c.t")
+```
+
+### Match Patterns
+Write a pattern to match any three-letter word ending in "at":
+
+```{r dot, exercise = TRUE}
+words <- c("cat", "bat", "rat", "hat", "mat")
+str_view(words, ___)
+```
+
+```{r dot-solution}
+words <- c("cat", "bat", "rat", "hat", "mat")
+str_view(words, ".at")
+```
+
+
+### Anchors and Character Classes
+
+### Anchors
+- `^`: Matches the start of a string.
+- `$`: Matches the end of a string.
+
+### Example
+```{r}
+str_view(c("apple", "banana", "pear"), "^a")
+```
+
+### Character Classes
+- `[abc]`: Matches any character in the set.
+- `[^abc]`: Matches any character not in the set.
+
+### Shorthand Classes
+- `\d`: Digits
+- `\w`: Word characters
+- `\s`: Whitespace
+
+### Example
+```{r}
+str_view(c("123", "abc", "   "), "\d")
+```
+
+### Exercise: Use Anchors and Classes
+Write a pattern to match strings that start with "a" and contain digits:
+
+```{r matcha, exercise = TRUE}
+strings <- c("apple1", "banana2", "pear3")
+str_view(strings, ___)
+```
+
+
+
+### Quantifiers and Grouping
+
+### Quantifiers
+- `*`: 0 or more
+- `+`: 1 or more
+- `?`: 0 or 1
+- `{n}`: Exactly `n` occurrences
+
+### Example
+```{r}
+str_view(c("aa", "aaa", "aaaa"), "a{2,3}")
+```
+
+### Grouping and Capturing
+Use `()` to group patterns and capture parts of a match.
+
+### Example
+```{r}
+str_view(c("12-34", "56-78", "90-12"), "(\d{2})-(\d{2})")
+```
+
+### Exercise: Quantifiers and Groups
+Write a pattern to match three-letter words starting with "b" and ending with "g":
+
+```{r matchbg, exercise = TRUE}
+words <- c("bag", "big", "bug", "bog")
+str_view(words, ___)
+```
+
+
+### Advanced Pattern Matching and Replacement
+
+### Escaping Metacharacters
+Use `\\` to match metacharacters literally.
+
+### Example
+```{r}
+str_view(c("1+1=2", "2*2=4"), "\\+")
+```
+
+### Pattern Replacement
+- `str_replace()`: Replace the first match.
+- `str_replace_all()`: Replace all matches.
+
+### Example
+```{r}
+str_replace("The cat sat on the mat.", "cat", "dog")
+```
+
+### Regex Flags
+Modify regex behavior with flags (e.g., case-insensitive matching).
+
+### Exercise: Pattern Replacement
+Replace all instances of "is" with "was" in the following string:
+
+```{r iswas, exercise = TRUE}
+sentence <- "This is a test. It is fun. Or, at least my teacher think it is. Weido!"
+updated_sentence <- str_replace_all(sentence, ___, ___)
+
+updated_sentence
+```
+
+
+### Quiz
+
+```{r quiz4}
+quiz(
+  question("What does the `^` anchor match in a string?",
+    answer("The start of a string.", correct = TRUE),
+    answer("Any character in a set."),
+    answer("0 or more occurrences.")
+  ),
+  question("Which metacharacter matches 0 or 1 occurrences of a pattern?",
+    answer("*"),
+    answer("?"),
+    answer("+", correct = TRUE)
+  ),
+  question("What does the `\\d` shorthand class match?",
+    answer("Digits", correct = TRUE),
+    answer("Words"),
+    answer("Whitespace")
+  ),
+  question("Which regex pattern matches strings that start with 'a' and end with 'e'?",
+    answer("^a.e$"),
+    answer("a*e"),
+    answer("^ae$", correct = TRUE)
+  ),
+  question("What does the `str_replace_all()` function do?",
+    answer("Replaces the first match."),
+    answer("Replaces all matches.", correct = TRUE),
+    answer("Splits a string into parts.")
+  )
+)
+```
 
 
 ## Factors
