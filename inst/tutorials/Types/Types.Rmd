@@ -712,6 +712,11 @@ quiz(
 
 ## Factors
 
+Factors are used to represent categorical data in R. They are stored as integers with a corresponding set of character values.
+In this part of the tutorial, based on [chapter 16 of R for data science](https://r4ds.hadley.nz/factors) you will learn what factors are, why they are useful, and how to work with them using the `forcats` package.
+
+
+
 ## Dates and times
 
 
