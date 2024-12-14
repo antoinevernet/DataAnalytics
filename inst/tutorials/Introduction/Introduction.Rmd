@@ -76,49 +76,6 @@ Tutorial 3: Types and data structures
 
 Vectors, numbers, string, factors, dates, missing values
 
-Link...
-
-Tutorial 4: data in and out (csv, spreadsheets, databases, hierarchical data)
-
-Link...
-
-Tutorial 5: functions, iteration
-
-Link...
-
-Tutorial 6: descriptive analysis
-
-More data wrangling using bsa data and babynames.
-Things like pivot_wider, pivot_longer and join, plus some more mutate and friends.
-
-Link...
-
-
-Tutorial 7: Regression basics
-
-Is bsa still the right dataset for that?
-- linear regression
-
-
-Tutorial 8: Data is dirty
-
-Does the causal inference from here needs its own package?
-
-Tutorial: More types of regression
-- logistic regression
-- model diagnostics
-- model selection
-
-
-
-Tutorial 8: Adjusting for confounders
-
-Tutorial 9: Instrumental variables
-
-The social network tutorials need their own package?
-Tutorial 8: Social Network Analysis basics
-
-Tutorial 9: Network visualisation
 
 
 
