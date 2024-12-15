@@ -714,7 +714,17 @@ quiz(
 
 Factors are used to represent categorical data in R. They are stored as integers with a corresponding set of character values.
 In this part of the tutorial, based on [chapter 16 of R for data science](https://r4ds.hadley.nz/factors) you will learn what factors are, why they are useful, and how to work with them using the `forcats` package.
+Factors can be unordered, for example, storing categories like gender, or ordered, for example, storing age ranges.
 
+### Create a Factor
+Create a factor to represent the following data: `"apple", "banana", "apple", "cherry"`
+
+```{r createf, exercise = TRUE}
+# Create a factor
+fruits <- factor(c(___))
+
+fruits
+```
 
 
 ## Dates and times
