@@ -548,7 +548,6 @@ str_view(strings, ___)
 ### Basic Regex Patterns
 
 
-
 ### Literal Characters
 Match exact characters in strings.
 

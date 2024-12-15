@@ -1,0 +1,20 @@
+---
+title: "Data in and out"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(dplyr)
+library(stringr)
+
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Importing data
+
+This tutorial will cover the basics of importing data into R. It is largely based on [chapters 20-23](https://r4ds.hadley.nz/import) of the book "R for Data Science" by Hadley Wickham and Garrett Grolemund.
+
+
+csv, spreadsheets, databases, hierarchical data
