@@ -12,9 +12,23 @@ library(stringr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Importing data
+## Importing and exporting data
 
-This tutorial will cover the basics of importing data into R. It is largely based on [chapters 20-23](https://r4ds.hadley.nz/import) of the book "R for Data Science" by Hadley Wickham and Garrett Grolemund.
+This tutorial will cover the basics of importing and exporting data with R. It is largely based on [chapters 20-23](https://r4ds.hadley.nz/import) of the book "R for Data Science" by Hadley Wickham and Garrett Grolemund.
 
+We will briefly review reading in data from text files formatted as CSV, TSV, and fixed-width files. We will also cover reading in data from Excel files, other statistical packages (SPSS, Stata, and SAS), databases, and hierarchical data formats.
 
-csv, spreadsheets, databases, hierarchical data
+The ability to import a wide range of data formats is one of R's strengths and a very useful skill to have as a data scientist. 
+
+When covering the various file format that we can import data from, we will also discuss the various options that are available to export the data, which can be very useful when sharing data with others.
+
+## Review
+
+## Working with data from Excel
+
+## Working with data from other statistical packages
+
+## Working with data from databases
+
+## Working with data from hierarchical data formats
+
