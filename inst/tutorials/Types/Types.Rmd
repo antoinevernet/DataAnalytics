@@ -997,6 +997,80 @@ quiz(
 
 ## Missing value
 
+In R, missing values are represented as `NA`. They can indicate missing or undefined data.
+
+### Key Functions
+- `is.na()`: Check for missing values.
+- `anyNA()`: Check if there are any missing values in a dataset.
+
+```{r, echo=TRUE}
+data <- c(1, 2, NA, 4, NA, 6)
+# Identify missing values
+missing <- is.na(data)
+missing
+
+# Check if any values are missing
+any_missing <- anyNA(data)
+any_missing
+```
+
+### Identify Missing Values
+Identify the missing values in the following vector:
+
+```{r missing, exercise = TRUE}
+data <- c(3, NA, 7, NA, 10)
+
+missing <- is.na(___)
+missing
+```
+
+### Removing Missing Values
+You can remove missing values using `na.omit()` or by subsetting.
+
+```{r, echo=TRUE}
+data <- c(1, 2, NA, 4, NA, 6)
+# Remove missing values
+cleaned_data <- na.omit(data)
+cleaned_data
+
+# Remove missing values using subsetting
+cleaned_data2 <- data[!is.na(data)]
+cleaned_data2
+```
+
+### Remove Missing Values
+Remove the missing values from the following vector:
+
+```{r removemissing, exercise = TRUE}
+data <- c(3, NA, 7, NA, 10)
+
+cleaned_data <- ___
+
+cleaned_data
+```
+
+
+### Replacing Missing Values
+You can replace missing values with specific values using `ifelse()` or `replace()`.
+
+```{r, echo=TRUE}
+data <- c(1, 2, NA, 4, NA, 6)
+
+data_filled <- ifelse(is.na(data), 0, data)
+data_filled
+```
+
+### Replace Missing Values
+Replace the missing values in the following vector with the value `-1`:
+
+```{r replaceMissing, exercise = TRUE}
+data <- c(3, NA, 7, NA, 10)
+data_filled <- ifelse(___, ___, data)
+data_filled
+```
+
+
+
 R codes missing values as `NA`
 
 It also has codes for not-a-number: `NaN`
