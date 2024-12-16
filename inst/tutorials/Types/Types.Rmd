@@ -1069,16 +1069,100 @@ data_filled <- ifelse(___, ___, data)
 data_filled
 ```
 
+### Summarizing Data with Missing Values
+
+Many functions in R can handle missing values using the `na.rm = TRUE` argument.
 
 
-R codes missing values as `NA`
+```{r, echo=TRUE}
+data <- c(1, 2, NA, 4, NA, 6)
+# Calculate the sum, ignoring missing values
+sum_data <- sum(data, na.rm = TRUE)
+sum_data
 
-It also has codes for not-a-number: `NaN`
+# Calculate the mean, ignoring missing values
+mean_data <- mean(data, na.rm = TRUE)
+mean_data
+```
 
-And `NULL`
+### Summarize Data
+Calculate the mean of the following vector, ignoring missing values:
+
+```{r summaryMissing, exercise = TRUE}
+data <- c(3, NA, 7, NA, 10)
+
+mean_data <- mean(___)
+mean_data
+```
+
+
+### Missing Values in Data Frames
+You can handle missing values in data frames using similar techniques.
+
+```{r, echo=TRUE}
+data <- data.frame(
+  x = c(1, 2, NA, 4),
+  y = c(NA, 2, 3, 4)
+)
+
+cleaned_data <- na.omit(data)
+cleaned_data
+
+# Replace missing values with column means
+data$x[is.na(data$x)] <- mean(data$x, na.rm = TRUE)
+data$y[is.na(data$y)] <- mean(data$y, na.rm = TRUE)
+data
+```
+
+### Handle Missing Values
+Replace the missing values in the following data frame with 0:
+
+```{r handleMissing, exercise = TRUE}
+data <- data.frame(
+  x = c(1, 2, NA, 4),
+  y = c(NA, 2, 3, 4)
+)
+
+data[is.na(data)] <- ___
+data
+```
+
+
+As we have seen, R codes missing values as `NA`. But it also has other special values for certain situations, like `Inf` for infinity and `-Inf` for negative infinity. It also has codes for not-a-number: `NaN` which is used to represent undefined or unrepresentable values. It also has `NA_integer_`, `NA_real_`, `NA_complex_`, and `NA_character_` for missing values of different types. Finally, it has `NULL` which is used to represent the absence of a value.
 
 Think carefully about these when you are using/writing functions as they might not all evaluate to the same result.
 
+### Quiz
+
+```{r quiz7}
+quiz(
+  question("What is the purpose of the `is.na()` function in R?",
+    answer("To check for missing values.", correct = TRUE),
+    answer("To calculate the mean of a vector."),
+    answer("To replace missing values.")
+  ),
+  question("What does the `na.rm = TRUE` argument do in R?",
+    answer("Removes missing values from a calculation.", correct = TRUE),
+    answer("Replaces missing values with the mean."),
+    answer("Checks if any values are missing.")
+  ),
+  question("What is the output of the following code? `sum(c(1, 2, NA, 4), na.rm = TRUE)`",
+    answer("7", correct = TRUE),
+    answer("NA"),
+    answer("3")
+  ),
+  question("What is the special value used to represent infinity in R?",
+    answer("NA"),
+    answer("Inf", correct = TRUE),
+    answer("NaN")
+  ),
+  question("What is the special value used to represent not-a-number in R?",
+    answer("NA"),
+    answer("Inf"),
+    answer("NaN", correct = TRUE)
+  )
+)
+```
 
 ## Packages
 
