@@ -727,6 +727,52 @@ fruits
 ```
 
 
+### Levels
+Levels are the distinct categories in a factor. You can view and modify levels using `levels()`.
+
+```{r}
+# View and modify levels
+levels(colors) <- c("red", "blue", "green")
+
+colors
+```
+
+### Change Levels
+Modify the levels of the `fruits` factor created earlier to capitalize the first letter of each fruit:
+
+```{r levels, exercise = TRUE}
+# Modify levels
+levels(fruits) <- c(___)
+
+fruits
+```
+
+
+### Ordered Factors
+
+Sometimes the order of levels is important. You can create ordered factors using `factor(..., ordered = TRUE)`.
+
+```{r}
+sizes <- factor(c("small", "medium", "large", "medium"), 
+                levels = c("small", "medium", "large"), 
+                ordered = TRUE)
+
+sizes
+```
+
+### Create an Ordered Factor
+Create an ordered factor for the days of the week, with `"Monday"` as the first level and `"Sunday"` as the last:
+
+```{r ordered, exercise = TRUE}
+# Create ordered factor
+days <- factor(c("Monday", "Tuesday", "Wednesday", "Sunday"), 
+               levels = c(___), 
+               ordered = TRUE)
+days
+```
+
+
+
 ## Dates and times
 
 
@@ -779,6 +825,6 @@ name_of_the_package::function_from_package(args)
 
 ### Congratulations
 
-Congratulations! You have learned a lot in this tutorial! Well done for sticky with it until the end.
+Congratulations! You have learned a lot in this tutorial! Well done for sticking with it until the end.
 
 
