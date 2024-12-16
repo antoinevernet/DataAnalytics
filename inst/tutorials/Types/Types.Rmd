@@ -771,6 +771,74 @@ days <- factor(c("Monday", "Tuesday", "Wednesday", "Sunday"),
 days
 ```
 
+### Manipulating Factors with forcats
+
+Use `fct_reorder()` to reorder levels based on a variable.
+
+```{r}
+# Reorder levels based on frequency
+fruits <- factor(c("apple", "banana", "apple", "cherry"))
+fruits <- fct_infreq(fruits)
+fruits
+```
+
+### Reorder Factors by Length
+Reorder the `fruits` factor so that the levels are ordered by the length of the fruit name:
+
+```{r reorder, exercise = TRUE}
+# Reorder by length
+fruits <- fct_reorder(fruits, ___)
+
+fruits
+```
+
+### Combining and Collapsing Levels
+
+Use `fct_collapse()` to combine multiple levels into one.
+
+```{r}
+# Combine levels
+fruits <- fct_collapse(fruits, 
+                        citrus = c("orange", "lemon"), 
+                        tropical = c("banana", "mango"))
+fruits
+```
+
+### Combine Levels
+
+Combine the levels of the `fruits` factor into `"apple"` and `"other"`:
+
+```{r combine, exercise = TRUE}
+# Combine levels
+fruits <- fct_collapse(fruits, 
+                        apple = "apple", 
+                        other = c(___))
+
+fruits
+```
+
+### Quiz
+
+```{r quiz5}
+quiz(
+  question("What is the purpose of factors in R?",
+    answer("To represent categorical data.", correct = TRUE),
+    answer("To store numerical data."),
+    answer("To visualize data.")
+  ),
+  question("How do you create an ordered factor in R?",
+    answer("factor(..., ordered = TRUE)", correct = TRUE),
+    answer("factor(..., ordered = FALSE)"),
+    answer("fct_reorder()")
+  ),
+  question("What does the `fct_collapse()` function do?",
+    answer("Reorders factor levels."),
+    answer("Combines multiple levels into one.", correct = TRUE),
+    answer("Changes the order of factor levels.")
+  )
+)
+
+```
 
 
 ## Dates and times
