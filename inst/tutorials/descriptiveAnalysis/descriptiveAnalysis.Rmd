@@ -56,7 +56,8 @@ ggplot(data = bsa, aes(x=Partyfwx, y=welfare2)) +
        y = "Welfare perception\n(1 = sympathetic, 5 = poor don't deserve)") +
   guides(shape = guide_legend(title = "Sex"))
        
-
 ```
+
+This illustrate that while there are differences by party affiliation, there is probably a lot of variation among the voters of each party, leading to less differences between party average than one might maybe have expected.
 
 
