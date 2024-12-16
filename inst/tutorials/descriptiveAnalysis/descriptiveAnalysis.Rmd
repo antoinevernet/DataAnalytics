@@ -6,9 +6,57 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(dplyr)
+library(ggplot2)
+
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
 ## Introduction
+
+When you first start working with a dataset, it is often helpful to get a sense of what the data looks like. This can help you identify any potential issues with the data, as well as give you a better understanding of the variables you are working with. In this tutorial, we will explore some common descriptive analysis techniques that can be used to summarize and visualize data.
+Going through this initial exploratory analysis helps catch potential issues with the data, such as missing values, outliers, or inconsistencies, resolving those early can save you from a world of pain down the line.
+
+```{r}
+#What would be a good example? The Harvard economists I first thought off are not a good example because it is a computation issue, not a data junk issue.
+```
+
+
+## Summary Statistics
+
+
+## Data Visualization
+
+If you remember the british social attitudes survey from a previous tutorial, we built the following plot:
+
+```{r plotex, message=FALSE, warning=FALSE}
+bsa <- readRDS("./data/bsa2021_healthcare_equalities_recoded.rds")
+
+bsa <- bsa |> mutate(welfare2 = if_else(welfare2 == 9, NA, welfare2),
+                     leftrigh = if_else(leftrigh == 9, NA, leftrigh))
+ggplot(data = bsa, aes(x=leftrigh, y=welfare2)) + 
+  geom_point(aes(shape = DVSex21), alpha=0.05) +
+  geom_smooth(method = "loess", se = FALSE) +
+  labs(title = "Welfare perception by political orientation",
+       x = "Political orientation\n(1 = left, 5 = right)",
+       y = "Welfare perception\n(1 = sympathetic, 5 = poor don't deserve)") +
+  guides(shape = guide_legend(title = "Sex"))
+```
+
+This plot is a good example of what exploratory data analysis might produce. And making this graph suggested to me another one that might be more informative: the dataset contains other variables on political orientation, for example which party someone is supporting, closest to, or likely to vote for at the next election (`Partyfwx`). We could plot another graph, but with the x-axis using this party identification variable. This would allow us to see if there is a difference in welfare perception between people who voted for different parties.
+
+```{r}
+bsa <- bsa |> mutate(welfare2 = if_else(welfare2 == 9, NA, welfare2),
+                     leftrigh = if_else(leftrigh == 9, NA, leftrigh))
+ggplot(data = bsa, aes(x=Partyfwx, y=welfare2)) +
+  geom_boxplot() +
+  labs(title = "Welfare perception by party identification",
+       x = "Party identification",
+       y = "Welfare perception\n(1 = sympathetic, 5 = poor don't deserve)") +
+  guides(shape = guide_legend(title = "Sex"))
+       
+
+```
+
 
