@@ -1,5 +1,5 @@
 ---
-title: "Tutorial"
+title: "The Basics of R"
 output: learnr::tutorial
 runtime: shiny_prerendered
 ---
@@ -304,7 +304,7 @@ This virtual environment contains a folder named data placed at the root. This m
 
 ### Loading a csv file
 
-First, there is a csv (comma-separated value) file that you will be able to read using the `read.csv()` function names bsa2021_healthcare_equalities_recoded.csv.
+First, in the `./data` folder, you will find a csv (comma-separated value) file that you can read using the `read.csv()` function, the file is named 'bsa2021_healthcare_equalities_recoded.csv'.
 
 
 ```{r readcsv, exercise=TRUE}
@@ -332,8 +332,8 @@ The data is from the British Social Attitudes survey and is a recoded version of
 
 ### Loading a tab separated file
 
-Tab separated files are very common. Like CSV files they are simple text files. But instead of a comma, they use tabulation.
-In the same data folder, there is a file named bsa2021_healthcare_equalities_recoded.tab. Load it.
+Tab separated files are very common. Like CSV files they are simple text files. But instead of a comma, they use tabulation as a separator.
+In the same `./data` folder, there is a file named bsa2021_healthcare_equalities_recoded.tab. Load it.
 
 ```{r readtab, exercise=TRUE}
 
