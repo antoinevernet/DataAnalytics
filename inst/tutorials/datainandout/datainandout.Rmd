@@ -144,14 +144,43 @@ data <- read_excel("./data/bsa2021_healthcare_equalities_recoded_multisheet.xlsx
 data
 ```
 
-### Exercise: Read a Specific Sheet
+### Read a Specific Sheet
 Read the sheet `"secondSheet"` from the file `bsa2021_healthcare_equalities_recoded_multisheet.xlsx`:
 
-```{r interactive, exercise = TRUE}
+```{r secondSheet, exercise = TRUE}
 # Read a specific sheet
 data <- read_excel(____, sheet = ___)
 
 data
+```
+
+### Reading Part of a Sheet
+
+When spreadsheets contain extraneous information, use the `range` argument to specify the part of the sheet you want to import.
+
+The following file includes metadata above and below the data. The data starts at cell `A5` and ends at `F15`.
+Use the `range` argument to read only the data portion (cells `A5:F15`) from the `bsa2021_healthcare_equalities_recoded_range.xlsx` file (remember, the data is in `./data`):
+
+```{r range, exercise = TRUE}
+bsa <- read_excel(____, range = "___")
+bsa
+```
+
+
+## Combining Multiple Sheets from Excel Files
+
+### Reading Multiple Sheets
+Use the `sheet` argument to specify which sheet to read.
+The file "bsa2021_partial_multisheet2.xlsx" contains three sheets: firstSheet, secondSheet, and thirdSheet. Each of these contains 100 records from the bsa data we have been working with. Load all the sheets in different objects and combine them using `bind_rows()`.
+
+```{r bindrows, exercise = TRUE}
+firstSheet <- read_excel(___, sheet = ___)
+secondSheet <- read_excel(___, sheet = ___)
+thirdSheet <- read_excel(___, sheet = ___)
+
+data <- ____(____, ____, ____)
+
+summary(data)
 ```
 
 
