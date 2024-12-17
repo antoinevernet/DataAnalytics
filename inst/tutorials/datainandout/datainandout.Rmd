@@ -7,7 +7,7 @@ runtime: shiny_prerendered
 ```{r setup, include=FALSE}
 library(learnr)
 library(dplyr)
-library(stringr)
+library(readxl)
 
 knitr::opts_chunk$set(echo = FALSE)
 ```
@@ -111,6 +111,47 @@ bsa <- read_xlsx("./data/bsa2021_healthcare_equalities_recoded.xlsx")
 
 head(bsa)
 
+```
+
+
+### Skipping Rows and Handling Headers
+
+Some files contain metadata at the top. Use `skip` to ignore rows. Use `col_names` to specify if the file has a header row.
+
+```{r, echo=TRUE}
+# Skip the first 2 rows
+data <- read_excel("./data/bsa2021_healthcare_equalities_recoded.xlsx", skip = 2)
+head(data)
+```
+
+### Exercise: Skip Rows
+Read the 'bsa2021_healthcare_equalities_recoded.xlsx' file and skip the first 3 rows:
+
+```{r skipRow, exercise = TRUE}
+data <- read_excel(____, skip = ___)
+head(data)
+```
+
+
+Combining Multiple Sheets from Excel Files
+
+### Reading Multiple Sheets
+Use the `sheet` argument to specify which sheet to read. You can specify either the name of the sheet, or the index of the sheet.
+
+```{r, echo=TRUE}
+# Read a specific sheet
+data <- read_excel("./data/bsa2021_healthcare_equalities_recoded_multisheet.xlsx", sheet = 2)
+data
+```
+
+### Exercise: Read a Specific Sheet
+Read the sheet `"secondSheet"` from the file `bsa2021_healthcare_equalities_recoded_multisheet.xlsx`:
+
+```{r interactive, exercise = TRUE}
+# Read a specific sheet
+data <- read_excel(____, sheet = ___)
+
+data
 ```
 
 
