@@ -186,7 +186,74 @@ summary(data)
 
 ## Working with data from other statistical packages
 
+There are several R packages that allow you to read data from other statistical packages. 
+The two most commonly used ones are `haven` and `foreign`. 
+The `haven` package is part of the tidyverse and therefore interfaces nicely with other tidyverse packages. 
+The `foreign` package is older and has been around for a long time. 
+It is not part of the tidyverse, but it is still widely used.
+While this tutorial focuses on using the `haven` package, it is useful to keep in mind that the foreign package exists.
+
+
+
+### SPSS
+
+The `haven` package provides functions to read SPSS files. The `read_sav()` function reads SPSS files.
+In the `./data` folder, there is a file named "bsa2021_healthcare_equalities_open.sav". Load it.
+
+```{r readspss, exercise=TRUE}
+library(haven)
+bsa <- ____
+
+head(bsa)
+```
+
+```{r readspss-hint}
+# The function to use is read_sav
+# Then you can use the path to the file inside this function
+
+```
+
+```{r readspss-solution}
+
+bsa <- read_sav("./data/bsa2021_healthcare_equalities_open.sav")
+
+head(bsa)
+
+```
+
+One thing you can notice when using `head()` is that the data is numerically coded (for example, 1 for men, 2 for women) instead of being stored in a more human readable format. The version of the BSA that we have been using in previous tutorial had already been recoded to make it easier to work with. It is important not to underestimate how much data cleaning and preparation goes into any analysis, even when the input data is already clean (and you data cannot get much cleaner than the UK data service data).
+
+
+### Stata
+
+The `read_dta()` function reads Stata files.
+
+```{r readstata, exercise=TRUE}
+bsa <- ____
+
+head(bsa)
+
+```
+
+```{r readstata-hint}
+# The function to use is read_dta
+# Then you can use the path to the file inside this function
+
+```
+
+```{r readstata-solution}
+
+bsa <- read_dta("./data/bsa2021_healthcare_equalities_open.dta")
+
+head(bsa)
+
+```
+
+### SAS
+
+The `read_sas()` function reads SAS files.
+
 ## Working with data from databases
 
-## Working with data from hierarchical data formats
+## Working with data in hierarchical data formats
 
