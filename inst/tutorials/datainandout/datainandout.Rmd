@@ -8,6 +8,7 @@ runtime: shiny_prerendered
 library(learnr)
 library(dplyr)
 library(readxl)
+library(haven)
 
 knitr::opts_chunk$set(echo = FALSE)
 ```
@@ -252,6 +253,29 @@ head(bsa)
 ### SAS
 
 The `read_sas()` function reads SAS files.
+
+```{r readsas, exercise=TRUE}
+
+cars <- ____
+
+head(cars)
+
+```
+
+```{r readsas-hint}
+# The function to use is read_sas
+# Then you can use the path to the file inside this function
+
+```
+
+```{r readsas-solution}
+
+cars <- read_sas()
+
+head(cars)
+
+```
+
 
 ## Working with data from databases
 
