@@ -30,8 +30,8 @@ Whenever possible, I will indicate where in these resources to find additional m
 
 Other sources
 
-https://github.com/paulgp/applied-methods-phd
-https://paulgp.github.io/2024/06/24/llm_talk.html
+[Causal inference in R](https://www.r-causal.org)
+
 https://www.andrewheiss.com/blog/
 
 https://github.com/Mixtape-Sessions/Causal-Inference-2
@@ -52,6 +52,12 @@ https://adv-r.hadley.nz/introduction.html
 https://r-pkgs.org/whole-game.html
 
 https://happygitwithr.com
+
+
+https://github.com/paulgp/applied-methods-phd
+https://paulgp.github.io/2024/06/24/llm_talk.html
+
+
 
 
 ## Structure of the tutorials!
