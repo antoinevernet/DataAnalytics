@@ -99,6 +99,13 @@ Things like pivot_wider, pivot_longer and join, plus some more mutate and friend
 
 Link...
 
+Tutorial 7?: The basics of causal graphs
+
+- what is a causal graph
+
+
+All this using [ggdag](https://cran.r-project.org/web/packages/ggdag/vignettes/intro-to-ggdag.html)
+
 
 Tutorial 7: Regression basics
 
@@ -119,7 +126,13 @@ Tutorial: More types of regression
 
 Tutorial 8: Adjusting for confounders
 
+- what is a confounder
+- what is a mediator
+
 Tutorial 9: Instrumental variables
+
+Tutorial 10: Difference-in-differences
+
 
 The social network tutorials need their own package?
 Tutorial 8: Social Network Analysis basics
