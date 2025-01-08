@@ -31,7 +31,7 @@ Whenever possible, I will indicate where in these resources to find additional m
 Other sources
 
 [Causal inference in R](https://www.r-causal.org)
-
+[DevOps for Data Science](https://do4ds.com)
 https://www.andrewheiss.com/blog/
 
 https://github.com/Mixtape-Sessions/Causal-Inference-2
@@ -57,8 +57,9 @@ https://happygitwithr.com
 https://github.com/paulgp/applied-methods-phd
 https://paulgp.github.io/2024/06/24/llm_talk.html
 
+[Data Visualisation class](https://datavizf24.classes.andrewheiss.com)
 
-
+[Statistical Inference via Data Science: A ModernDive into R and the Tidyverse](https://moderndive.com/v2/)
 
 ## Structure of the tutorials!
 
