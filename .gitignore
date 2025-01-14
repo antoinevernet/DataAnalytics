@@ -2,12 +2,9 @@
 .Rhistory
 .RData
 .Ruserdata
+.Rprofile
 
 
-Introduction.html
-Tutorial-1--The-Basics.html
-Basics.html
-Visualisation.html
-Types.html
+*.html
 
 Visualisation_files/
