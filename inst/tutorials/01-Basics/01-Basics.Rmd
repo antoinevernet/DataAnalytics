@@ -6,6 +6,7 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(gradethis)
 library(nycflights13)
 library(dplyr)
 knitr::opts_chunk$set(echo = FALSE)
@@ -33,18 +34,54 @@ Write the R code required to add fifty-nine plus seventy-three plus two, divided
 
 ```
 
+```{r basicOperations-solution}
+(59 + 73 + 2) / 3
+```
+
+```{r basicOperations-check}
+grade_this({
+  pass_if_equal()
+
+  fail_if_equal(
+    59 + 73 + 2 / 3,
+    message = "Make sure to pay attention to the order of operations. Use parentheses () where necessary."
+  )
+  
+  fail()
+})
+```
+
+
 ### Creating objects
 
 You can use the `<-` (assignment operator) to create an object. You can then use code to manipulate objects.
 Assign the value 2 to an object called two:
 
 ```{r objects, exercise=TRUE}
+
+two
+
+```
+
+```{r objects-hint}
 #Example
 one <- 1
 
-one
+one # Print the value of the `two` object
+```
 
-two
+```{r objects-solution}
+# with printing ----
+two <- 2
+two # Print the value of the `two` object
+
+# without printing ----
+two <- 2
+```
+
+```{r objects-check}
+
+grade_this_code()
 
 ```
 
