@@ -7,7 +7,7 @@
 
 *.html
 
-Visualisation_files/
+02-Visualisation_files/
 
 # General
 .DS_Store
@@ -15,7 +15,8 @@ Visualisation_files/
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
