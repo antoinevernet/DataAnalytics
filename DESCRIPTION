@@ -1,7 +1,7 @@
 Package: DataAnalytics
 Type: Package
 Title: DataAnalytics: a set of tutorials for Data Analytics with R
-Version: 0.1.0
+Version: 0.1.1
 Author: Antoine Vernet
 Maintainer: Antoine Vernet <a.vernet@ucl.ac.uk>
 Description: A set of tutorial for a beginner's course on Data Analytics with R.
@@ -11,4 +11,7 @@ LazyData: true
 URL: https://github.com/antoinevernet/DataAnalytics
 BugReports: https://github.com/antoinevernet/DataAnalytics/issues
 Imports:
+  learnr
+  gradethis
+  tidyverse
   nycflights13
