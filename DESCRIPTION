@@ -1,14 +1,24 @@
-Package: DataAnalytics
 Type: Package
+Package: DataAnalytics
 Title: DataAnalytics: a set of tutorials for Data Analytics with R
-Version: 0.1.0
+Version: 0.1.1
 Author: Antoine Vernet
 Maintainer: Antoine Vernet <a.vernet@ucl.ac.uk>
-Description: A set of tutorial for a beginner's course on Data Analytics with R.
+Description: A set of tutorial for a beginner's course on Data Analytics
+    with R.
 License: GNU GPLv3
-Encoding: UTF-8
-LazyData: true
 URL: https://github.com/antoinevernet/DataAnalytics
 BugReports: https://github.com/antoinevernet/DataAnalytics/issues
 Imports:
-  nycflights13
+    ggplot2,
+    gradethis (>= 0.2.14),
+    learnr,
+    nycflights13,
+    rmarkdown,
+    stringr
+Remotes: 
+    github::rstudio/gradethis
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    usethis
