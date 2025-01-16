@@ -16,7 +16,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Welcome!
 
-Welcome to this introductory tutorial on using R. This series of tutorials are companions to the course material for several courses at UCL BSSC: BCPM0094 Data Analytics for Project Managers and BCPM0049 Social Network Analysis. They focus primarily on helping you with using R with a focus on the tools that are useful to complete the courses. This means that they are by no means a complete overview of what you can do with R and jump over some topics that would usually be covered in an introduction to R, this also means that they cover some more advanced material that you would usually not find in an introduction to R. 
+Welcome to this introductory tutorial on using R. This series of tutorials are companions to the course material for several courses at UCL BSSC: BCPM0094 Data Analytics for Project Managers, BCPM0049 Social Network Analysis, and BSSC0021 Business Statistics and Data Analytics. They focus primarily on helping you with using R with a focus on the tools that are useful to complete the courses. This means that they are by no means a complete overview of what you can do with R and jump over some topics that would usually be covered in an introduction to R, this also means that they cover some more advanced material that you would usually not find in an introduction to R. 
+
 There are many more complete (and amazing) resources on R and on causal inference. Below are a few of the ones that we often refer to in the course:
 
 - R for Data Science (2nd Edition) https://r4ds.hadley.nz/preface-2e
@@ -24,9 +25,7 @@ There are many more complete (and amazing) resources on R and on causal inferenc
 - Causal Inference: The Mixtape
 - Data Visualization: A Practical Introduction
 
-
 Whenever possible, I will indicate where in these resources to find additional material.
-
 
 Other sources
 
@@ -76,24 +75,24 @@ Tutorial 3: Types and data structures
 
 Vectors, numbers, string, factors, dates, missing values
 
-
-
-
 The rest of this tutorial walks you through installing R and RStudio and demonstrates how the tutorials work.
 
 
 ## Getting started
 
-If you have not yet installed R and RStudio, please see the following material:
+If you have not yet installed R and RStudio, please go to the Install R tutorial to get started. You can access this tutorial by selecting it from the list of tutorials on the left-hand side of the screen or by running:
 
-- links!!!
+```r
+learnr::run_tutorial("Install", package = "DataAnalytics")
+```
+
+in the console.
 
 ### The simplest exercise ever
 
 Write the R code required to add two plus two:
 
 ```{r two-plus-two, exercise=TRUE}
-
 ```
 
 As you can see, R is a calculator, but it is much more than this. It is a fully-fledged programming language, in the limit, you can write any piece of software in R. 
