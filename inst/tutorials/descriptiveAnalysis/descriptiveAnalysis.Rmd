@@ -8,6 +8,8 @@ runtime: shiny_prerendered
 library(learnr)
 library(dplyr)
 library(ggplot2)
+bsa <- readRDS("./data/bsa2021_healthcare_equalities_recoded.rds")
+
 
 knitr::opts_chunk$set(echo = FALSE)
 ```
@@ -18,15 +20,115 @@ knitr::opts_chunk$set(echo = FALSE)
 When you first start working with a dataset, it is often helpful to get a sense of what the data looks like. This can help you identify any potential issues with the data, as well as give you a better understanding of the variables you are working with. In this tutorial, we will explore some common descriptive analysis techniques that can be used to summarize and visualize data.
 Going through this initial exploratory analysis helps catch potential issues with the data, such as missing values, outliers, or inconsistencies, resolving those early can save you from a world of pain down the line.
 
-```{r}
-#What would be a good example? The Harvard economists I first thought off are not a good example because it is a computation issue, not a data junk issue.
+
+
+```{r example-plot}
+library(ggplot2)
+
+ggplot(data = bsa, aes(x=leftrigh, y=welfare2)) + 
+  geom_point()
+
 ```
 
+The above plot, that you already encountered in the data visualisation tutorial, shows the relationship between two variables in the British Social Attitudes Survey dataset. This is a good example of the benefits that exploratory data analysis can deliver: in this case, it makes it obvious that some data cleaning is necessary.
+
+While plotting data is key in exploratory data analysis, it is not the only tool at our disposal. In this tutorial, we will cover common descriptive analysis techniques, such as calculating summary statistics that can help us get a better idea of the data we are working with before we move on to doing more advanced analyses, like modelling.
+
+In this case, using summary statistics, would have highlighted that something was off with the data (albeit maybe not in as salient a manner than the plot).
+
+```{r}
+bsa |> 
+  select(leftrigh, welfare2) |> 
+  summary()
+```
+
+Seeing that the maximum value for `leftrigh` and `welfare2` is 9, would have indicated an issue with the data for someone looking at the data dictionary at the same time.
 
 ## Summary Statistics
 
+Summary statistics are a way to describe the main characteristics of a dataset. It gives us a better understanding of the data we are working with, and helps identify any potential issues that need to be addressed. It is done alongside visualisation in the first phase of analysis data.
 
-## Data Visualization
+Common summary statistics include measures of central tendency (e.g., mean, median, mode), measures of dispersion (e.g., range, variance, standard deviation), and measures of shape (e.g., skewness, kurtosis).
+In this tutorial, we focus on mean, median, and standard deviation, as these are the most commonly used summary statistics.
+
+### Mean
+
+Calculating the mean is very straightforward in R. You can use the `mean()` function to calculate the mean of a vector or a column in a data frame. For example, to calculate the mean of the `leftrigh` variable in the British Social Attitudes Survey dataset, you can use the following code:
+
+```{r mean, exercise=TRUE}
+
+bsa |> 
+  pull(leftrigh) |> 
+  ____
+```
+
+```{r mean-solution}
+
+bsa |> 
+  pull(leftrigh) |> 
+  mean()
+```
+
+We use the `pull()` function instead of `select()` because when we extract only one variable, pull returns a vector, which is the input the `mean()` function expects, it then calculates the mean of this vector.
+When we need to do a calculation on more than one variable at a time, we will use the `select()` function, it will return a dataframe, and the `mean()` function will then know to do the calculation on all the column and return the mean value for each of the columns.
+
+### Median
+
+Calculating the median is just as easy as calculating the mean. Let's do it using the `median()` function:
+
+```{r median, exercise=TRUE}
+
+bsa |> 
+  pull(leftrigh) |> 
+  ____
+```
+
+```{r median-solution}
+
+bsa |> 
+  pull(leftrigh) |> 
+  median()
+```
+
+### Standard Deviation
+
+To calculate the standard deviation, we use the `sd()` function. Let's calculate the standard deviation of the `leftrigh` variable:
+
+```{r sd, exercise=TRUE}
+
+bsa |> 
+  pull(leftrigh) |> 
+  ____
+```
+
+```{r sd-solution}
+
+bsa |> 
+  pull(leftrigh) |> 
+  sd()
+```
+
+### The `summary()` function doing it all for you and more
+
+The `summary()` function is a very useful function that provides a quick overview of the data. It calculates the minimum, 1st quartile, median, mean, 3rd quartile, and maximum values for each variable in the dataset. Let's use the `summary()` function to get an overview of the `leftrigh` and `welfare2` variables
+
+```{r summary, exercise=TRUE}
+
+bsa |> 
+  select(leftrigh, welfare2) |> 
+  ____
+```
+
+```{r summary-solution}
+
+bsa |> 
+  select(leftrigh, welfare2) |> 
+  summary()
+```
+
+
+
+## Bonus track: Data Visualization
 
 If you remember the british social attitudes survey from a previous tutorial, we built the following plot:
 
@@ -58,6 +160,6 @@ ggplot(data = bsa, aes(x=Partyfwx, y=welfare2)) +
        
 ```
 
-This illustrate that while there are differences by party affiliation, there is probably a lot of variation among the voters of each party, leading to less differences between party average than one might maybe have expected.
+This illustrate that while there are differences by party affiliation, there is probably a lot of variation among the voters of each party, leading to less differences between party averages than one might maybe have expected.
 
 
