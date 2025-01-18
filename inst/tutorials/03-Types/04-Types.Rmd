@@ -8,6 +8,7 @@ runtime: shiny_prerendered
 library(learnr)
 library(dplyr)
 library(stringr)
+library(forcats)
 
 knitr::opts_chunk$set(echo = FALSE)
 ```
@@ -205,7 +206,6 @@ In this section of the tutorial, you will learn the basics of working with strin
 Strings in R are text enclosed in single (`'`) or double (`"`) quotes.
 
 ```{r, echo=TRUE}
-# Examples of strings
 string1 <- "Hello, R!"
 string2 <- 'Let\'s learn! This string contains two "quirks"!'
 ```
@@ -231,7 +231,6 @@ Escape characters allow you to include special characters in strings. Common exa
 - `\n` for a new line
 - `\t` for a tab
 
-### Example
 ```{r, echo=TRUE}
 escaped_string <- "He said, \"Learn R!\""
 
@@ -255,14 +254,13 @@ multi_line_string
 
 Raw strings (`r""`) are useful when you want to avoid interpreting escape sequences, such as in file paths or regular expressions.
 
-### Example
 ```{r, echo=TRUE}
 raw_string <- r"(C:\Users\Name)"
 
 raw_string
 ```
 
-### Exercise: Create a Raw String
+### Create a Raw String
 
 Write a raw string for a file path:
 
@@ -276,7 +274,6 @@ my_path
 
 ### Quiz
 
-QUESTIONS NOT GREAT - NEED BETTER ONES
 
 ```{r, echo=TRUE, eval=FALSE}
 print("This is a \"quote\".")
@@ -302,7 +299,6 @@ quiz(
 
 The `str_c()` function from the `stringr` package is used to combine multiple strings.
 
-### Example
 ```{r, echo=TRUE}
 library(stringr)
 combined <- str_c("Hello", "world", sep = ", ")
@@ -327,7 +323,6 @@ combined
 ### Handling Missing Values
 By default, `str_c()` does not replace `NA` with "NA" when combining strings, and missing values are contagious.
 
-### Example
 ```{r, echo=TRUE}
 with_na <- str_c("Hello", NA, "world")
 without_na <- str_c(str_replace_na(c("Hello", NA, "world")))
@@ -373,8 +368,7 @@ quiz(
 
 Use `str_sub()` to extract parts of a string by specifying the start and end positions.
 
-### Example
-```{r}
+```{r, echo=TRUE}
 # Extract characters 1 to 5
 substring <- str_sub("Learning R is fun!", 1, 5)
 
@@ -395,8 +389,7 @@ word
 ### Replacing Substrings
 Use `str_replace()` or `str_replace_all()` to replace parts of a string.
 
-### Example
-```{r}
+```{r, echo=TRUE}
 # Replace "fun" with "awesome"
 replaced <- str_replace("Learning R is fun!", "fun", "awesome")
 
@@ -418,8 +411,7 @@ updated_text
 
 Use `str_split()` to divide a string into parts based on a pattern.
 
-### Example
-```{r}
+```{r, echo=TRUE}
 # Split a sentence into words
 words <- str_split("Learning R is fun!", " ")
 
@@ -439,8 +431,7 @@ words
 
 Use `str_flatten()` to join a list of strings into one string.
 
-### Example
-```{r}
+```{r, echo=TRUE}
 # Join words into a sentence
 sentence <- str_flatten(c("Learning", "R", "is", "fun!"), " ")
 
@@ -461,8 +452,7 @@ sentence
 
 Handle strings with special characters or different encodings.
 
-### Example
-```{r}
+```{r, echo=TRUE}
 # String with Unicode characters
 unicode_text <- "Hello, \u4E16\u754C" # "Hello, World" in Mandarin
 
@@ -485,7 +475,7 @@ text
 Sort or transform strings based on locale-specific rules.
 
 
-```{r}
+```{r, echo=TRUE}
 # Sort strings in a specific locale
 library(stringi)
 words <- c("ångstrom", "apple", "Ångström")
@@ -523,24 +513,655 @@ quiz(
   
 ## Regular expressions
 
+### What are Regular Expressions?
+Regular expressions are sequences of characters that define a search pattern. They are widely used for string matching and manipulation.
 
+### Key Functions
+- `str_view()` and `str_view_all()`: Visualize regex matches in strings.
+
+### Example
+```{r, echo=TRUE}
+library(stringr)
+strings <- c("apple", "banana", "pear")
+str_view(strings, "a")
+```
+
+### Find a Pattern
+Use `str_view()` to visualize all occurrences of the letter "p" in the following strings:
+
+```{r strview, exercise = TRUE}
+strings <- c("apple", "banana", "pear")
+str_view(strings, ___)
+```
+
+
+### Basic Regex Patterns
+
+
+
+### Literal Characters
+Match exact characters in strings.
+
+```{r, echo=TRUE}
+str_view(c("cat", "bat", "rat"), "cat")
+```
+
+### Metacharacters
+Characters with special meanings, such as `.`, `*`, `+`, `?`, and `[]`.
+
+```{r, echo=TRUE}
+str_view(c("cat", "bat", "rat"), "c.t")
+```
+
+### Match Patterns
+Write a pattern to match any three-letter word ending in "at":
+
+```{r dot, exercise = TRUE}
+words <- c("cat", "bat", "rat", "hat", "mat")
+str_view(words, ___)
+```
+
+```{r dot-solution}
+words <- c("cat", "bat", "rat", "hat", "mat")
+str_view(words, ".at")
+```
+
+
+### Anchors and Character Classes
+
+### Anchors
+- `^`: Matches the start of a string.
+- `$`: Matches the end of a string.
+
+```{r, echo=TRUE}
+str_view(c("apple", "banana", "pear"), "^a")
+```
+
+### Character Classes
+- `[abc]`: Matches any character in the set.
+- `[^abc]`: Matches any character not in the set.
+
+### Shorthand Classes
+- `\d`: Digits
+- `\w`: Word characters
+- `\s`: Whitespace
+
+
+```{r, echo=TRUE}
+str_view(c("123", "abc", "   "), "\\d")
+# We need to use \\ to escape the backslash
+```
+
+### Use Anchors and Classes
+Write a pattern to match strings that start with "a" and contain digits:
+
+```{r matcha, exercise = TRUE}
+strings <- c("apple1", "banana2", "pear3")
+str_view(strings, ___)
+```
+
+
+### Quantifiers and Grouping
+
+### Quantifiers
+- `*`: 0 or more
+- `+`: 1 or more
+- `?`: 0 or 1
+- `{n}`: Exactly `n` occurrences
+
+```{r, echo=TRUE}
+str_view(c("aa", "aaa", "aaaa"), "a{2,3}")
+```
+
+### Grouping and Capturing
+Use `()` to group patterns and capture parts of a match.
+
+```{r, echo=TRUE}
+str_view(c("12-34", "56-78", "90-12"), "(\\d{2})-(\\d{2})")
+```
+
+### Quantifiers and Groups
+Write a pattern to match three-letter words starting with "b" and ending with "g":
+
+```{r matchbg, exercise = TRUE}
+words <- c("bag", "big", "bug", "bog")
+str_view(words, ___)
+```
+
+
+### Advanced Pattern Matching and Replacement
+
+### Escaping Metacharacters
+Use `\\` to match metacharacters literally.
+
+```{r, echo=TRUE}
+str_view(c("1+1=2", "2*2=4"), "\\+")
+```
+
+### Pattern Replacement
+- `str_replace()`: Replace the first match.
+- `str_replace_all()`: Replace all matches.
+
+```{r, echo=TRUE}
+str_replace("The cat sat on the mat.", "cat", "dog")
+```
+
+### Regex Flags
+Modify regex behavior with flags (e.g., case-insensitive matching).
+
+### Pattern Replacement
+Replace all instances of "is" with "was" in the following string:
+
+```{r iswas, exercise = TRUE}
+sentence <- "This is a test. It is fun. Or, at least my teacher think it is. Weido!"
+updated_sentence <- str_replace_all(sentence, ___, ___)
+
+updated_sentence
+```
+
+
+### Quiz
+
+```{r quiz4}
+quiz(
+  question("What does the `^` anchor match in a string?",
+    answer("The start of a string.", correct = TRUE),
+    answer("Any character in a set."),
+    answer("0 or more occurrences.")
+  ),
+  question("Which metacharacter matches 0 or 1 occurrences of a pattern?",
+    answer("*"),
+    answer("?"),
+    answer("+", correct = TRUE)
+  ),
+  question("What does the `\\d` shorthand class match?",
+    answer("Digits", correct = TRUE),
+    answer("Words"),
+    answer("Whitespace")
+  ),
+  question("Which regex pattern matches strings that start with 'a' and end with 'e'?",
+    answer("^a.e$"),
+    answer("a*e"),
+    answer("^ae$", correct = TRUE)
+  ),
+  question("What does the `str_replace_all()` function do?",
+    answer("Replaces the first match."),
+    answer("Replaces all matches.", correct = TRUE),
+    answer("Splits a string into parts.")
+  )
+)
+```
 
 
 ## Factors
 
+Factors are used to represent categorical data in R. They are stored as integers with a corresponding set of character values.
+In this part of the tutorial, based on [chapter 16 of R for data science](https://r4ds.hadley.nz/factors) you will learn what factors are, why they are useful, and how to work with them using the `forcats` package.
+Factors can be unordered, for example, storing categories like gender, or ordered, for example, storing age ranges.
+
+### Create a Factor
+Create a factor to represent the following data: `"apple", "banana", "apple", "cherry"`
+
+```{r createf, exercise = TRUE}
+library(forcats)
+fruits <- factor(c(___))
+
+fruits
+```
+
+
+### Levels
+Levels are the distinct categories in a factor. You can view and modify levels using `levels()`.
+
+```{r, echo=TRUE}
+# View and modify levels
+levels(colors) <- c("red", "blue", "green")
+
+colors
+```
+
+### Change Levels
+Modify the levels of the `fruits` factor created earlier to capitalize the first letter of each fruit:
+
+```{r levels, exercise = TRUE}
+# Modify levels
+levels(fruits) <- c(___)
+
+fruits
+```
+
+
+### Ordered Factors
+
+Sometimes the order of levels is important. You can create ordered factors using `factor(..., ordered = TRUE)`.
+
+```{r, echo=TRUE}
+sizes <- factor(c("small", "medium", "large", "medium"), 
+                levels = c("small", "medium", "large"), 
+                ordered = TRUE)
+
+sizes
+```
+
+### Create an Ordered Factor
+Create an ordered factor for the days of the week, with `"Monday"` as the first level and `"Sunday"` as the last:
+
+```{r ordered, exercise = TRUE}
+# Create ordered factor
+days <- factor(c("Monday", "Tuesday", "Wednesday", "Sunday"), 
+               levels = c(___), 
+               ordered = TRUE)
+days
+```
+
+### Manipulating Factors with forcats
+
+Use `fct_reorder()` to reorder levels based on a variable.
+
+```{r, echo=TRUE}
+# Reorder levels based on frequency
+fruits <- factor(c("apple", "banana", "apple", "cherry"))
+fruits <- fct_infreq(fruits)
+fruits
+```
+
+### Reorder Factors by Length
+Reorder the `fruits` factor so that the levels are ordered by the length of the fruit name:
+
+```{r reorder, exercise = TRUE}
+# Reorder by length
+fruits <- fct_reorder(fruits, ___)
+
+fruits
+```
+
+### Combining and Collapsing Levels
+
+Use `fct_collapse()` to combine multiple levels into one.
+
+```{r, echo=TRUE}
+# Combine levels
+fruits <- fct_collapse(fruits, 
+                        citrus = c("orange", "lemon"), 
+                        tropical = c("banana", "mango"))
+fruits
+```
+
+### Combine Levels
+
+Combine the levels of the `fruits` factor into `"apple"` and `"other"`:
+
+```{r combine, exercise = TRUE}
+# Combine levels
+fruits <- fct_collapse(fruits, 
+                        apple = "apple", 
+                        other = c(___))
+
+fruits
+```
+
+### Quiz
+
+```{r quiz5}
+quiz(
+  question("What is the purpose of factors in R?",
+    answer("To represent categorical data.", correct = TRUE),
+    answer("To store numerical data."),
+    answer("To visualize data.")
+  ),
+  question("How do you create an ordered factor in R?",
+    answer("factor(..., ordered = TRUE)", correct = TRUE),
+    answer("factor(..., ordered = FALSE)"),
+    answer("fct_reorder()")
+  ),
+  question("What does the `fct_collapse()` function do?",
+    answer("Reorders factor levels."),
+    answer("Combines multiple levels into one.", correct = TRUE),
+    answer("Changes the order of factor levels.")
+  )
+)
+
+```
+
+
 ## Dates and times
 
+### Basics of Dates and Times
+In this part of the tutorial, based on [chapter 16 of R for data science](https://r4ds.hadley.nz/dates-and-times.html) you will learn how to work with dates and times in R using the `lubridate` package.
+Dates and times are represented as special objects in R.
+
+### Key Functions
+- `ymd()`, `mdy()`, `dmy()`: Parse dates.
+- `now()`, `today()`: Get the current date and time.
+
+```{r, echo=TRUE}
+# Parse a date
+library(lubridate)
+date <- ymd("2023-12-31")
+date
+
+# Get the current date and time
+current_time <- now()
+print(current_time)
+```
+
+### Parse a Date
+Parse the string `"31-12-2023"` as a date:
+
+```{r parsedate, exercise = TRUE}
+# Parse the date
+date <- dmy("___")
+
+date
+```
+
+### Extracting Parts of a Date/Time
+You can extract specific components of a date or time using functions like `year()`, `month()`, `day()`, `hour()`, `minute()`, and `second()`.
+
+```{r, echo=TRUE}
+# Extract components
+time <- now()
+year <- year(time)
+month <- month(time)
+day <- day(time)
+
+print(year)
+print(month)
+print(day)
+```
+
+
+### Extract Components
+Extract the month and day from the following date:
+
+```{r extractdate, exercise = TRUE}
+date <- ymd("2023-12-31")
+month <- month(date)
+day <- day(date)
+print(month)
+print(day)
+```
+
+### Date Arithmetic
+
+You can perform arithmetic on dates and times using `+` and `-` operators.
+
+```{r, echo=TRUE}
+# Add and subtract time
+date <- ymd("2023-12-31")
+next_week <- date + weeks(1)
+last_month <- date - months(1)
+
+next_week
+last_month
+```
+
+### Adjust Dates
+Find the date two weeks after `"2023-12-31"`:
+
+```{r twoweeks, exercise = TRUE}
+# Adjust the date
+date <- ymd("2023-12-31")
+adjusted_date <- date + weeks(___)
+adjusted_date
+```
+
+### Time Zones
+
+You can set or change the time zone of a datetime object using `with_tz()` or `force_tz()`.
+
+```{r echo=TRUE}
+# Set a time zone
+time <- now()
+time_utc <- with_tz(time, "UTC")
+time_utc
+
+# Force a time zone
+time_forced <- force_tz(time, "America/New_York")
+time_forced
+```
+
+### Change Time Zone
+Convert the current time to UTC:
+
+```{r tz, exercise = TRUE}
+time <- now()
+time_utc <- with_tz(time, ___)
+time_utc
+```
+
+
+### Parsing and Formatting Dates
+Use `parse_date_time()` to parse dates and `format()` to format them into strings.
+
+```{r, echo=TRUE}
+parsed_date <- parse_date_time("31-12-2023 23:59", "dmy HM")
+formatted_date <- format(parsed_date, "%B %d, %Y")
+
+parsed_date
+formatted_date
+```
+
+### Format a Date
+Format the date `"2023-12-31"` as `"December 31, 2023"`:
+
+```{r formatdate, exercise = TRUE}
+date <- ymd("2023-12-31")
+formatted_date <- format(date, ___)
+formatted_date
+```
+
+
+### Quiz
+
+```{r quiz6}
+quiz(
+  question("What is the purpose of the `lubridate` package in R?",
+    answer("To work with dates and times.", correct = TRUE),
+    answer("To visualize data."),
+    answer("To manipulate strings.")
+  ),
+  question("How do you extract the month from a date object in R?",
+    answer("month()", correct = TRUE),
+    answer("day()"),
+    answer("year()")
+  ),
+  question("What does the `weeks()` function do in R?",
+    answer("Adds a week to a date.", correct = TRUE),
+    answer("Extracts the week of the year."),
+    answer("Converts a date to a week.")
+  ),
+  question("What does the `with_tz()` function do?",
+    answer("Forces a time zone on a date."),
+    answer("Sets the time zone of a datetime object.", correct = TRUE),
+    answer("Formats a date.")
+  ),
+  question("What does the `format()` function do?",
+    answer("Parses dates and times."),
+    answer("Formats dates and times into strings.", correct = TRUE),
+    answer("Extracts components of a date.")
+  ),
+  question("What is the output of the following code? `parse_date_time('31-12-2023 23:59', 'dmy HM')`",
+    answer("2023-12-31 23:59:00"),
+    answer("December 31, 2023 11:59 PM"),
+    answer("2023-12-31 11:59 PM", correct = TRUE)
+  ),
+  question('Which function parses dates in the format `"YYYY-MM-DD"`?',
+    answer("ymd()", correct = TRUE),
+    answer("mdy()"),
+    answer("dmy()")
+  )
+)
+```
 
 ## Missing value
 
-R codes missing values as `NA`
+In R, missing values are represented as `NA`. They can indicate missing or undefined data.
 
-It also has codes for not-a-number: `NaN`
+### Key Functions
+- `is.na()`: Check for missing values.
+- `anyNA()`: Check if there are any missing values in a dataset.
 
-And `NULL`
+```{r, echo=TRUE}
+data <- c(1, 2, NA, 4, NA, 6)
+# Identify missing values
+missing <- is.na(data)
+missing
+
+# Check if any values are missing
+any_missing <- anyNA(data)
+any_missing
+```
+
+### Identify Missing Values
+Identify the missing values in the following vector:
+
+```{r missing, exercise = TRUE}
+data <- c(3, NA, 7, NA, 10)
+
+missing <- is.na(___)
+missing
+```
+
+### Removing Missing Values
+You can remove missing values using `na.omit()` or by subsetting.
+
+```{r, echo=TRUE}
+data <- c(1, 2, NA, 4, NA, 6)
+# Remove missing values
+cleaned_data <- na.omit(data)
+cleaned_data
+
+# Remove missing values using subsetting
+cleaned_data2 <- data[!is.na(data)]
+cleaned_data2
+```
+
+### Remove Missing Values
+Remove the missing values from the following vector:
+
+```{r removemissing, exercise = TRUE}
+data <- c(3, NA, 7, NA, 10)
+
+cleaned_data <- ___
+
+cleaned_data
+```
+
+
+### Replacing Missing Values
+You can replace missing values with specific values using `ifelse()` or `replace()`.
+
+```{r, echo=TRUE}
+data <- c(1, 2, NA, 4, NA, 6)
+
+data_filled <- ifelse(is.na(data), 0, data)
+data_filled
+```
+
+### Replace Missing Values
+Replace the missing values in the following vector with the value `-1`:
+
+```{r replaceMissing, exercise = TRUE}
+data <- c(3, NA, 7, NA, 10)
+data_filled <- ifelse(___, ___, data)
+data_filled
+```
+
+### Summarizing Data with Missing Values
+
+Many functions in R can handle missing values using the `na.rm = TRUE` argument.
+
+
+```{r, echo=TRUE}
+data <- c(1, 2, NA, 4, NA, 6)
+# Calculate the sum, ignoring missing values
+sum_data <- sum(data, na.rm = TRUE)
+sum_data
+
+# Calculate the mean, ignoring missing values
+mean_data <- mean(data, na.rm = TRUE)
+mean_data
+```
+
+### Summarize Data
+Calculate the mean of the following vector, ignoring missing values:
+
+```{r summaryMissing, exercise = TRUE}
+data <- c(3, NA, 7, NA, 10)
+
+mean_data <- mean(___)
+mean_data
+```
+
+
+### Missing Values in Data Frames
+You can handle missing values in data frames using similar techniques.
+
+```{r, echo=TRUE}
+data <- data.frame(
+  x = c(1, 2, NA, 4),
+  y = c(NA, 2, 3, 4)
+)
+
+cleaned_data <- na.omit(data)
+cleaned_data
+
+# Replace missing values with column means
+data$x[is.na(data$x)] <- mean(data$x, na.rm = TRUE)
+data$y[is.na(data$y)] <- mean(data$y, na.rm = TRUE)
+data
+```
+
+### Handle Missing Values
+Replace the missing values in the following data frame with 0:
+
+```{r handleMissing, exercise = TRUE}
+data <- data.frame(
+  x = c(1, 2, NA, 4),
+  y = c(NA, 2, 3, 4)
+)
+
+data[is.na(data)] <- ___
+data
+```
+
+
+As we have seen, R codes missing values as `NA`. But it also has other special values for certain situations, like `Inf` for infinity and `-Inf` for negative infinity. It also has codes for not-a-number: `NaN` which is used to represent undefined or unrepresentable values. It also has `NA_integer_`, `NA_real_`, `NA_complex_`, and `NA_character_` for missing values of different types. Finally, it has `NULL` which is used to represent the absence of a value.
 
 Think carefully about these when you are using/writing functions as they might not all evaluate to the same result.
 
+### Quiz
+
+```{r quiz7}
+quiz(
+  question("What is the purpose of the `is.na()` function in R?",
+    answer("To check for missing values.", correct = TRUE),
+    answer("To calculate the mean of a vector."),
+    answer("To replace missing values.")
+  ),
+  question("What does the `na.rm = TRUE` argument do in R?",
+    answer("Removes missing values from a calculation.", correct = TRUE),
+    answer("Replaces missing values with the mean."),
+    answer("Checks if any values are missing.")
+  ),
+  question("What is the output of the following code? `sum(c(1, 2, NA, 4), na.rm = TRUE)`",
+    answer("7", correct = TRUE),
+    answer("NA"),
+    answer("3")
+  ),
+  question("What is the special value used to represent infinity in R?",
+    answer("NA"),
+    answer("Inf", correct = TRUE),
+    answer("NaN")
+  ),
+  question("What is the special value used to represent not-a-number in R?",
+    answer("NA"),
+    answer("Inf"),
+    answer("NaN", correct = TRUE)
+  )
+)
+```
 
 ## Packages
 
@@ -558,7 +1179,7 @@ R has packages for tasks like data loading, data wrangling, visualisation, model
 
 Packages are installed with the function `install.packages()` and updated with `update.packages()`
 
-```{r, eval = FALSE}
+```{r, eval = FALSE, echo=TRUE}
 install.packages("name of the package")
 install.packages(c("package_1", "package_2"))
 
@@ -566,7 +1187,7 @@ install.packages(c("package_1", "package_2"))
 
 Once you have installed a package, you need to load it before you can use the functions in it.
 
-```{r, eval = FALSE}
+```{r, eval = FALSE, echo=TRUE}
 library(name_of_the_package)
 
 # What most people do (me included) 
@@ -580,6 +1201,6 @@ name_of_the_package::function_from_package(args)
 
 ### Congratulations
 
-Congratulations! You have learned a lot in this tutorial! Well done for sticky with it until the end.
+Congratulations! You have learned a lot in this tutorial! Well done for sticking with it until the end.
 
 
