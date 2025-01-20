@@ -1,0 +1,83 @@
+---
+title: "Network Statistics"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(dplyr)
+
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Introduction
+
+In this tutorial, we'll explore a social network dataset from a consulting firm. We will examine network-level measures and visualize the network using the igraph and ggraph packages. We will also introduce ERGMs (Exponential Random Graph Models) using the ergm package.
+
+### Setup and Data Import
+
+In this section, we load the required libraries and import the data. The data files should be located in a folder named `./data`.
+
+```{r exercise = TRUE}
+library(tidyverse)
+library(ggraph)
+library(igraph)
+library(stargazer)
+library(intergraph)
+library(sna)
+library(ergm)
+
+set.seed(02082018) 
+# Reading in the data
+consulting_adv <- read_delim(
+  "../data_assignment/Cross_Parker-Consulting_info.dl", 
+  delim = " ", skip = 4, col_names = FALSE)
+names(consulting_adv) <- c("sender", "receiver", "weight")
+
+consulting_val <- read_delim(
+  "../data_assignment/Cross_Parker-Consulting_value.dl", 
+  delim = " ", skip = 4, col_names = FALSE)
+names(consulting_val) <- c("sender", "receiver", "weight")
+
+consulting_gender <- scan("../data_assignment/Cross_Parker-Consulting-gender.txt")
+consulting_loc <- scan("../data_assignment/Cross_Parker-Consulting-location.txt")
+consulting_orglevel <- scan("../data_assignment/Cross_Parker-Consulting-orglevel.txt")
+consulting_region <- scan("../data_assignment/Cross_Parker-Consulting-region.txt")
+
+consulting_gender <- recode(consulting_gender, `1` = "male", `2` = "female")
+consulting_loc <- recode(consulting_loc, 
+                         `1` = "Boston", 
+                         `2` = "London", 
+                         `3` = "Paris", 
+                         `4` = "Rome", 
+                         `5` = "Madrid", 
+                         `6` = "Oslo", 
+                         `7` = "Copenhagen")
+consulting_orglevel <- recode(consulting_orglevel, 
+                              `1` = "Research Assistant", 
+                              `2` = "Junior Consultant",
+                              `3` = "Senior Consultant", 
+                              `4` = "Managing Consultant", 
+                              `5` = "Partner")
+consulting_region <- recode(consulting_region, 
+                            `1` = "Europe", 
+                            `2` = "USA")
+
+actors <- data.frame(
+  names    = 1:46, 
+  gender   = consulting_gender, 
+  location = consulting_loc,
+  orglevel = consulting_orglevel, 
+  region   = consulting_region
+)
+
+# Construct igraph objects
+c_adv <- graph_from_data_frame(consulting_adv, vertices = actors)
+c_val <- graph_from_data_frame(consulting_val, vertices = actors)
+
+```
+
+
+
