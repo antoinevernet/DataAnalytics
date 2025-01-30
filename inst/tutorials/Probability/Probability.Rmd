@@ -1,0 +1,504 @@
+---
+title: "Probability in R"
+output: 
+  learnr::tutorial:
+    df_print: paged
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+description: "Learn about probability calculations in R through interactive exercises"
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+gradethis::gradethis_setup()
+
+library(NHANES)
+library(tidyverse)
+library(knitr)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.pipe = "|>")
+```
+
+
+# Probability in R
+
+In this chapter we will go over probability computations in R. 
+
+## Basic probability calculations
+
+Let's create a vector of outcomes from one to 6, using the `seq()` function to create such a sequence:
+
+```{r outcomes-setup}
+# Create the initial outcomes vector that will be used in subsequent exercises
+outcomes <- seq(1, 6)
+```
+
+```{r outcomes, exercise=TRUE, exercise.setup="outcomes-setup"}
+# Create a vector from 1 to 6 using seq()
+# Assign it to the variable outcomes and show the result
+
+outcomes <- _______
+
+outcomes
+```
+
+```{r outcomes-solution}
+outcomes <- seq(1, 6)
+
+outcomes
+```
+
+```{r outcomes-check}
+grade_this_code()
+```
+
+### Logical values
+
+Now let's create a vector of logical values based on whether the outcome in each position is equal to 1. Remember that `==` tests for equality of each element in a vector:
+
+```{r outcomesBool-setup}
+# Make outcomes available
+outcomes <- seq(1, 6)
+```
+
+```{r outcomesBool, exercise=TRUE, exercise.setup="outcomesBool-setup"}
+# Create a vector of logical values based on whether the outcome in each position is equal to 1
+# Assign it to the variable outcome1isTrue and show the result
+
+outcome1isTrue <- _________
+
+outcome1isTrue
+```
+
+```{r outcomesBool-hint}
+# You can use the == operator to test for equality
+# Let's see what happens when we test for equality of the outcomes vector with 1
+
+outcomes == 1
+```
+
+```{r outcomesBool-solution}
+outcome1isTrue <- outcomes == 1
+
+outcome1isTrue
+```
+
+```{r outcomesBool-check}
+grade_this_code()
+```
+
+
+Remember that the simple probability of an outcome is number of occurrences of the outcome divided by the total number of events.  To compute a probability, we can take advantage of the fact that TRUE/FALSE are equivalent to 1/0 in R.  The formula for the mean (sum of values divided by the number of values) is thus exactly the same as the formula for the simple probability!  So, we can compute the probability of the event by simply taking the mean of the logical vector.
+
+Use the `mean()` function to calculate the probability of the event that the outcome is 1.
+
+```{r probability-setup}
+# Make outcomes and outcome1isTrue available
+outcomes <- seq(1, 6)
+outcome1isTrue <- outcomes == 1
+```
+
+```{r probability, exercise=TRUE, exercise.setup="probability-setup"}
+# Assign the result to the variable p1isTrue and show the result
+p1isTrue <- ___________
+
+p1isTrue
+```
+
+```{r probability-solution}
+p1isTrue <- mean(outcome1isTrue)
+
+p1isTrue
+```
+
+```{r probability-check}
+grade_this_code()
+```
+
+## Empirical Frequency
+
+Now let's explore how to calculate empirical probabilities using real data. We'll analyze rainfall patterns in San Francisco to understand the probability of rain on any given day.
+
+We'll use a dataset containing daily precipitation records for San Francisco. First, let's load and prepare the data by removing unnecessary columns:
+
+```{r prepare-sfrain, message=FALSE, exercise=TRUE}
+# we will remove the STATION and NAME variables
+# since they are identical for all rows
+
+SFrain <- read_csv("data/SanFranciscoRain-1329219.csv") |>
+  dplyr::select(-STATION, -NAME)
+```
+
+Let's examine our data using the `glimpse()` function. This function provides a concise summary of each variable in our dataset:
+
+```{r view-sfrain, exercise=TRUE, exercise.setup="prepare-sfrain"}
+glimpse(SFrain)
+```
+
+The data frame contains a variable called `PRCP` (precipitation) which measures the amount of rainfall in inches for each day. To calculate the probability of rain, we first need to create a binary variable that indicates whether it rained on each day (1) or not (0).
+
+We'll create this new variable called `rainToday` using the `mutate()` function. The expression `PRCP > 0` creates a logical (TRUE/FALSE) value, which we convert to 1/0 using `as.integer()`:
+
+```{r rainToday, exercise=TRUE, exercise.setup="view-sfrain"}
+SFrain <-
+  SFrain |>
+    mutate(rainToday = as.integer(PRCP > 0))
+
+glimpse(SFrain)
+```
+
+Using this same piping pattern and the `summarize()` function, calculate the probability of rain in San Francisco:
+
+```{r probability-rain, exercise=TRUE, exercise.setup="rainToday"}
+# Calculate the probability of rain in San Francisco by taking the mean of rainToday
+# Use the summarize() function to create a new variable called pRain
+# Assign the result to pRainInSF and show the result
+
+pRainInSF <-
+  SFrain |>
+    __________
+
+pRainInSF
+```
+
+```{r probability-rain-hint-1}
+# Remember that probability is just the mean of a binary (0/1) variable
+# We can use summarize() to calculate this mean
+```
+
+```{r probability-rain-hint-2}
+# The structure should be:
+# summarize(new_variable_name = mean(variable_to_average))
+```
+
+```{r probability-rain-solution}
+pRainInSF <-
+  SFrain |>
+    summarize(pRain = mean(rainToday))
+
+pRainInSF
+```
+
+```{r probability-rain-check}
+grade_this({
+  # Check if they used summarize and mean
+  if (!grepl("summarize.*mean\\(.*rainToday.*\\)", .user_code)) {
+    fail("Make sure to use summarize() and mean() to calculate the probability")
+  }
+  # Check if result matches solution
+  pass_if_equal()
+})
+```
+
+## Conditional Probability
+
+Conditional probability is the probability of one event occurring, given that another event has occurred. For example, we might want to know: what's the probability of being unhealthy, specifically among people who are over 70 years old?
+
+We'll explore this using health data from the NHANES (National Health and Nutrition Examination Survey) dataset. First, let's prepare our data by creating two binary variables:
+
+1. `Over70`: TRUE if someone is over 70 years old
+2. `Unhealthy`: TRUE if they reported any days of poor physical health (`DaysPhysHlthBad > 0`)
+
+Here's how we create these variables:
+
+```{r health-setup, exercise=TRUE}
+# Create a data frame with Over70 and Unhealthy variables
+healthDataFrame <-
+  NHANES |>
+    mutate(
+      Over70 = Age > 70,
+      Unhealthy = DaysPhysHlthBad > 0
+    ) |>
+    dplyr::select(Unhealthy, Over70) |>
+    drop_na()
+
+glimpse(healthDataFrame)
+```
+
+```{r health-setup-solution}
+healthDataFrame <-
+  NHANES |>
+    mutate(
+      Over70 = Age > 70,
+      Unhealthy = DaysPhysHlthBad > 0
+    ) |>
+    dplyr::select(Unhealthy, Over70) |>
+    drop_na()
+
+glimpse(healthDataFrame)
+```
+
+```{r health-setup-check}
+grade_this_code()
+```
+
+### Probability of Being Over 70
+
+Let's calculate the probability of being over 70 years old in our dataset:
+
+```{r over70-prob, exercise=TRUE, exercise.setup="health-setup"}
+# Calculate the probability of being over 70
+# Use summarize() to calculate the mean of Over70
+# Assign the result to pOver70 and show the result
+
+pOver70 <-
+  healthDataFrame |>
+    ___________
+
+pOver70
+```
+
+```{r over70-prob-hint-1}
+# We can use summarize() to calculate the mean of the Over70 variable
+# Remember that TRUE/FALSE is treated as 1/0 in calculations
+```
+
+```{r over70-prob-hint-2}
+# The structure should be:
+# summarize(new_name = mean(Over70))
+```
+
+```{r over70-prob-solution}
+pOver70 <-
+  healthDataFrame |>
+    summarize(pOver70 = mean(Over70))
+
+pOver70
+```
+
+```{r over70-prob-check}
+grade_this({
+  # Check if they used summarize and mean
+  if (!grepl("summarize.*mean\\(.*Over70.*\\)", .user_code)) {
+    fail(
+      "Make sure to use summarize() and mean(Over70) to calculate the probability"
+    )
+  }
+  # Check if result matches solution
+  pass_if_equal()
+})
+```
+
+### Probability of Being Unhealthy
+
+Now let's calculate the probability of being unhealthy:
+
+```{r unhealthy-prob, exercise=TRUE, exercise.setup="health-setup"}
+# Calculate the probability of being unhealthy
+# Use summarize() to calculate the mean of Unhealthy
+# Assign the result to pUnhealthy and show the result
+
+pUnhealthy <-
+  healthDataFrame |>
+    ___________
+
+pUnhealthy
+```
+
+```{r unhealthy-prob-hint-1}
+# We can use summarize() to calculate the mean of the Unhealthy variable
+# Remember that TRUE/FALSE is treated as 1/0 in calculations
+```
+
+```{r unhealthy-prob-hint-2}
+# The structure should be:
+# summarize(new_name = mean(Unhealthy))
+```
+
+```{r unhealthy-prob-solution}
+pUnhealthy <-
+  healthDataFrame |>
+    summarize(pUnhealthy = mean(Unhealthy))
+
+pUnhealthy
+```
+
+```{r unhealthy-prob-check}
+grade_this({
+  # Check if they used summarize and mean
+  if (!grepl("summarize.*mean\\(.*Unhealthy.*\\)", .user_code)) {
+    fail(
+      "Make sure to use summarize() and mean(Unhealthy) to calculate the probability"
+    )
+  }
+  # Check if result matches solution
+  pass_if_equal()
+})
+```
+
+### Joint Probability
+
+The joint probability is the probability of two events occurring together. In our case, we want to find the probability that someone is both over 70 years old AND unhealthy.
+
+To calculate this, we need to:
+
+1. Create a new variable that is TRUE (1) only when both conditions (Over70 and Unhealthy) are TRUE
+2. Calculate the mean of this new variable to get the probability
+
+We can use multiplication (*) with logical values because:
+
+- TRUE * TRUE = 1
+- TRUE * FALSE = 0
+- FALSE * FALSE = 0
+
+Try it yourself:
+
+```{r joint-prob, exercise=TRUE, exercise.setup="health-setup"}
+# Calculate the probability of being both over 70 AND unhealthy
+# First create a new variable that multiplies Over70 and Unhealthy
+# Then calculate the mean of this new variable
+# Assign the result to pBoth and show the result
+
+pBoth <-
+  healthDataFrame |>
+    mutate(
+      both = ________
+    ) |>
+    summarize(pBoth = mean(both))
+
+pBoth
+```
+
+```{r joint-prob-hint-1}
+# When we multiply two logical values, the result is TRUE (1) only if both are TRUE
+# both = Over70 * Unhealthy
+```
+
+```{r joint-prob-solution}
+pBoth <-
+  healthDataFrame |>
+    mutate(
+      both = Over70 * Unhealthy
+    ) |>
+    summarize(pBoth = mean(both))
+
+pBoth
+```
+
+```{r joint-prob-check}
+grade_this({
+  # Check if they used both Over70 and Unhealthy
+  if (!grepl("both.*=.*Over70.*\\*.*Unhealthy", .user_code)) {
+    fail(
+      "Make sure to multiply Over70 and Unhealthy to get the joint probability"
+    )
+  }
+  # Check if result matches solution
+  pass_if_equal()
+})
+```
+
+### Conditional Probability
+
+Now we'll calculate P(Unhealthy | Over70) - the probability of being unhealthy given that someone is over 70. The vertical bar "|" means "given that" or "conditional on".
+
+To calculate this:
+
+1. First, we need to focus only on people over 70 (using `filter()`)
+2. Then, within this subset, calculate the probability of being unhealthy
+
+This is different from the joint probability because we're only looking at the subset of people who are over 70, rather than the entire population. Try it:
+
+```{r conditional-prob, exercise=TRUE, exercise.setup="health-setup"}
+# Calculate P(Unhealthy | Over70)
+# First filter to only include people over 70
+# Then calculate the probability of being unhealthy
+# Assign the result to pUnhealthyGivenOver70 and show the result
+
+pUnhealthyGivenOver70 <-
+  healthDataFrame |>
+    filter(________) |>
+    summarize(pUnhealthy = mean(Unhealthy))
+
+pUnhealthyGivenOver70
+```
+
+```{r conditional-prob-hint-1}
+# Use filter() to keep only rows where Over70 is TRUE
+```
+
+```{r conditional-prob-hint-2}
+# The structure should be:
+# filter(Over70 == TRUE)
+```
+
+```{r conditional-prob-solution}
+pUnhealthyGivenOver70 <-
+  healthDataFrame |>
+    filter(Over70 == TRUE) |>
+    summarize(pUnhealthy = mean(Unhealthy))
+
+pUnhealthyGivenOver70
+```
+
+```{r conditional-prob-check}
+grade_this({
+  # Check if they filtered for Over70
+  if (!grepl("filter.*Over70.*TRUE", .user_code)) {
+    fail(
+      "Make sure to filter for Over70 == TRUE before calculating the probability"
+    )
+  }
+  # Check if result matches solution
+  pass_if_equal()
+})
+```
+
+### Reverse Conditional Probability
+
+Finally, let's look at the reverse question: among unhealthy people, what proportion are over 70? This is written as P(Over70 | Unhealthy) - the probability of being over 70 given that someone is unhealthy.
+
+Notice how this is different from P(Unhealthy | Over70) that we calculated earlier:
+
+- P(Unhealthy | Over70) asks: "Among people over 70, what proportion are unhealthy?"
+- P(Over70 | Unhealthy) asks: "Among unhealthy people, what proportion are over 70?"
+
+Calculate this reverse conditional probability:
+
+```{r reverse-conditional, exercise=TRUE, exercise.setup="health-setup"}
+# Calculate P(Over70 | Unhealthy)
+# First filter to only include unhealthy people
+# Then calculate the probability of being over 70
+# Assign the result to pOver70GivenUnhealthy and show the result
+
+pOver70GivenUnhealthy <-
+  healthDataFrame |>
+    ________
+
+pOver70GivenUnhealthy
+```
+
+```{r reverse-conditional-hint-1}
+# First filter for Unhealthy == TRUE
+# Then calculate mean(Over70)
+```
+
+```{r reverse-conditional-hint-2}
+# The structure should be:
+# filter(Unhealthy == TRUE) |>
+# summarize(pOver70 = mean(Over70))
+```
+
+```{r reverse-conditional-solution}
+pOver70GivenUnhealthy <-
+  healthDataFrame |>
+    filter(Unhealthy == TRUE) |>
+    summarize(pOver70 = mean(Over70))
+
+pOver70GivenUnhealthy
+```
+
+```{r reverse-conditional-check}
+grade_this({
+  # Check if they filtered for Unhealthy
+  if (!grepl("filter.*Unhealthy.*TRUE", .user_code)) {
+    fail(
+      "Make sure to filter for Unhealthy == TRUE before calculating the probability"
+    )
+  }
+  # Check if result matches solution
+  pass_if_equal()
+})
+```
