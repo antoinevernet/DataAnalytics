@@ -71,9 +71,13 @@ one # Print the value of the `two` object
 ```
 
 ```{r objects-solution}
-# with printing ----
+# with implicit printing ----
 two <- 2
 two # Print the value of the `two` object
+
+# with explicit printing ----
+two <- 2
+print(two) # Print the value of the `two` object
 
 # without printing ----
 two <- 2
@@ -115,6 +119,11 @@ Code is not always straightforward and there are plenty of time (what I mean her
 
 ```
 
+```{r comment-solution}
+# Example
+
+two <- 2 # This is a comment, it explains that we are assigning the value 2 to the object two
+```
 
 ### Functions
 
@@ -127,7 +136,30 @@ For example, you can use the `sum()` function to add a large number of numbers, 
 # This is a vector of 10,000 numbers between 1 and 100
 numb <- sample(1:100, 10000, replace = TRUE)
 
+# Use the sum() function to add all the numbers in the vector
 
+```
+
+```{r functions-hint-1}
+# you can start by examining what we mean by a 'vector' of numbers
+
+numb
+```
+
+```{r functions-hint-2}
+# Now, pass `numb` to the `sum()` function to add all the numbers in the vector
+
+sum()
+```
+
+```{r functions-solution}
+numb <- sample(1:100, 10000, replace = TRUE)
+
+sum(numb)
+```
+
+```{r functions-check}
+grade_this_code()
 ```
 
 You could then do further modifications on the results, for example divide by the number of items in your vector to get the average (you can do this with the `length()` function). Note that there is a built-in function for the average: `mean()`
@@ -334,15 +366,31 @@ While it is fairly easy in practice, it requires some understanding of how and w
 
 In this part of the tutorial, we will load data that is contained within the virtual environment that the tutorial runs in. It will help illustrate how the filesystem and filepath work.
 
+### Filepath
+
+The filepath is the path to a file on your computer. It is the address that your computer uses to find the file you are looking for. To navigate the filesystem, you need to know where you are and where you want to go and how to move from one place to the other.
+
+Files are stored in folders (also called directories). The folders are organized in a tree structure. The root of the tree is the root folder, and it contains all the other folders. The current folder (called the 'current working directory') is where you are currently working. It is denoted with a dot `.`. You can move up one folder by using `..`. 
+
+For this tutorial, the file structure is:
+
+```
+root ('.')
+|--- 01-Basics.Rmd  # This file
+|--- data
+|    |--- bsa2021_healthcare_equalities_recoded.csv
+|    |--- bsa2021_healthcare_equalities_recoded.tab
+|    |--- bsa2021_healthcare_equalities_recoded.xlsx
+|    |--- bsa2021_healthcare_equalities_recoded.rds
+```
+
+We join the folder name with the file name using a forward slash `/`. So, to access the file `bsa2021_healthcare_equalities_recoded.csv`, you need to use the path `./data/bsa2021_healthcare_equalities_recoded.csv`.
+
 There are many types of files. In this tutorial we will see how to open some of the most common data format: csv, tab separated, and excel files. We will also look at one of R data format.
-
-This virtual environment contains a folder named data placed at the root. This means that the filepath to that folder is `./data`, within that data folder are several files that we will learn how to load in memory in order to do some data analysis.
-
 
 ### Loading a csv file
 
-First, there is a csv (comma-separated value) file that you will be able to read using the `read.csv()` function names bsa2021_healthcare_equalities_recoded.csv.
-
+First, there is a csv (comma-separated value) file that you will be able to read using the `read.csv()` function named `bsa2021_healthcare_equalities_recoded.csv`.
 
 ```{r readcsv, exercise=TRUE}
 
@@ -352,9 +400,10 @@ head(bsa)
 ```
 
 ```{r readcsv-hint}
-# the function to use is read.csv
-#Then you can use the path to the file inside this function
+# The function to use is read.csv
+# Then you can use the path to the file inside this function
 
+bsa <- read.csv(____)
 ```
 
 ```{r readcsv-solution}
@@ -363,6 +412,10 @@ bsa <- read.csv("./data/bsa2021_healthcare_equalities_recoded.csv")
 
 head(bsa)
 
+```
+
+```{r readcsv-check}
+grade_this_code()
 ```
 
 The data is from the British Social Attitudes survey and is a recoded version of the open teaching dataset for the 2021 edition of this survey. We will reuse this data during the class.
@@ -391,6 +444,10 @@ bsa <- read.delim("./data/bsa2021_healthcare_equalities_recoded.tab")
 
 head(bsa)
 
+```
+
+```{r readtab-check}
+grade_this_code()
 ```
 
 Note that tabulation (\t) is the standard delimiter in read delim, but if you have files using a different separator, a space for example, you can use the `sep` argument to change the separator that is being used. For example, `read.delim("yourfilepath", sep=" ")` will read a file that uses a space as a separator.
@@ -423,6 +480,10 @@ head(bsa)
 
 ```
 
+```{r readxl-check}
+grade_this_code()
+```
+
 ### Loading an RDS file
 
 R also has its own format. Two of these are quite useful (RData and RDS), but for now, we will only focus on RDS.
@@ -448,4 +509,8 @@ bsa <- readRDS("./data/bsa2021_healthcare_equalities_recoded.rds")
 
 head(bsa)
 
+```
+
+```{r readrds-check}
+grade_this_code()
 ```
