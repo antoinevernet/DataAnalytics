@@ -1,0 +1,340 @@
+---
+title: "Sampling in R"
+output: 
+  learnr::tutorial:
+    df_print: paged
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+description: "Learn about sampling, the central limit theorem, and confidence intervals through interactive exercises"
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+gradethis::gradethis_setup()
+
+library(NHANES)
+library(tidyverse)
+library(ggplot2)
+library(knitr)
+library(cowplot)
+
+# Set default options
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.pipe = "|>")
+
+# Set random seed for reproducibility
+set.seed(123456)
+
+# Create clean NHANES datasets that will be used throughout the tutorial
+NHANES <- NHANES |>
+  distinct(ID, .keep_all = TRUE) 
+
+NHANES_adult <- NHANES |>
+  filter(Age >= 18) |>
+  drop_na(Height)
+
+NHANES_cleanAlc <- NHANES |>
+  drop_na(AlcoholYear)
+```
+
+# Sampling in R
+
+This tutorial explores key statistical concepts including:
+
+- Sampling error and sampling distributions
+- The Central Limit Theorem
+- Confidence intervals
+
+## Sampling Error and Distributions
+
+Let's understand sampling error through practical examples using height data from the NHANES dataset:
+
+```{r sampling-intro, echo=FALSE}
+question("What is sampling error?",
+  answer("A mistake made while collecting data"),
+  answer("The difference between a sample mean and the population mean", correct = TRUE, message = "This natural variation occurs because different samples will give slightly different estimates."),
+  answer("When we take too small a sample"),
+  answer("When our sample is biased"),
+  allow_retry = TRUE
+)
+```
+
+First, examining the population distribution:
+
+```{r population-setup}
+# Calculate population statistics
+pop_mean <- mean(NHANES_adult$Height)
+pop_sd <- sd(NHANES_adult$Height)
+```
+
+```{r view-population, exercise=TRUE, exercise.setup="population-setup"}
+# Create a histogram of heights in the population
+# The red line marks the population mean
+NHANES_adult |>
+  ggplot(aes(x = Height)) +
+  geom_histogram(binwidth = 2, fill = "skyblue", color = "black") +
+  geom_vline(xintercept = pop_mean, color = "red", size = 1) +
+  labs(title = "Distribution of Heights in NHANES Adult Population",
+       x = "Height (cm)",
+       y = "Count") +
+  annotate("text", x = pop_mean + 5, y = 500, 
+           label = paste("Population Mean =", round(pop_mean, 1)),
+           color = "red")
+```
+
+Now we'll explore how sampling distributions change with different sample sizes. The code below:
+
+1. Takes multiple samples of a specified size
+2. Calculates the mean for each sample
+3. Plots the distribution of these sample means
+4. Shows how close they cluster around the true population mean
+
+Try running this code multiple times with different sample sizes to see how the distribution changes:
+
+```{r sampling-distribution-setup}
+# Function to simulate sampling distribution
+# n_samples: number of samples to take
+# sample_size: size of each sample
+simulate_samples <- function(n_samples, sample_size) {
+  sample_means <- numeric(n_samples)
+  for(i in 1:n_samples) {
+    sample_means[i] <- NHANES_adult |>
+      sample_n(sample_size) |>
+      summarize(mean_height = mean(Height)) |>
+      pull(mean_height)
+  }
+  return(sample_means)
+}
+```
+
+```{r many-samples, exercise=TRUE, exercise.setup="sampling-distribution-setup"}
+# Modify sample_size to explore different sampling distributions
+n_samples <- 100
+sample_size <- 50  # Try values like 10, 100, or 500
+
+# Get sample means
+samples <- simulate_samples(n_samples, sample_size)
+
+# Calculate spread of the sampling distribution
+sd_means <- sd(samples)
+
+# Create visualization
+tibble(mean = samples) |>
+  ggplot(aes(x = mean)) +
+  geom_histogram(binwidth = 0.5, fill = "skyblue", color = "black") +
+  geom_vline(xintercept = pop_mean, color = "red", size = 1) +
+  labs(title = paste("Distribution of Sample Means (n =", sample_size, ")"),
+       subtitle = paste("SD of means =", round(sd_means, 2),
+                       "\nRed line shows population mean"),
+       x = "Sample Mean Height (cm)",
+       y = "Count")
+```
+
+## The Central Limit Theorem
+
+The Central Limit Theorem (CLT) states that the sampling distribution of the mean becomes approximately normal as sample size increases, regardless of the original population's distribution.
+
+To demonstrate this, we'll use alcohol consumption data, which has a distinctly non-normal distribution:
+
+```{r view-alcohol, exercise=TRUE}
+# The original distribution is right-skewed
+NHANES_cleanAlc |>
+  ggplot(aes(x = AlcoholYear)) +
+  geom_histogram(bins = 30, fill = "skyblue", color = "black") +
+  labs(title = "Distribution of Alcohol Consumption",
+       x = "Alcohol Consumption (Drinks/Year)",
+       y = "Count")
+```
+
+The code below compares sampling distributions for different sample sizes. Run it multiple times and try modifying the sample sizes to see how the distributions change:
+
+```{r clt-setup}
+# Function to get sample means
+get_sample_means <- function(data, n_samples, sample_size) {
+  means <- numeric(n_samples)
+  for(i in 1:n_samples) {
+    means[i] <- data |>
+      sample_n(sample_size) |>
+      summarize(mean = mean(AlcoholYear)) |>
+      pull(mean)
+  }
+  return(means)
+}
+```
+
+```{r clt-compare, exercise=TRUE, exercise.setup="clt-setup"}
+# Modify these sample sizes to explore the CLT
+small_n <- 5    # Try values like 2, 10, 20
+large_n <- 100  # Try values like 50, 200, 500
+
+# Get sample means for both sizes
+means_small <- get_sample_means(NHANES_cleanAlc, 1000, small_n)
+means_large <- get_sample_means(NHANES_cleanAlc, 1000, large_n)
+
+# Create plots comparing the distributions
+p1 <- tibble(means = means_small) |>
+  ggplot(aes(x = means)) +
+  geom_histogram(bins = 30, fill = "skyblue", color = "black") +
+  labs(title = paste("Sample Size =", small_n),
+       x = "Sample Mean",
+       y = "Count")
+
+p2 <- tibble(means = means_large) |>
+  ggplot(aes(x = means)) +
+  geom_histogram(bins = 30, fill = "skyblue", color = "black") +
+  labs(title = paste("Sample Size =", large_n),
+       x = "Sample Mean",
+       y = "Count")
+
+plot_grid(p1, p2, ncol = 2)
+```
+
+
+```{r clt-quiz, echo=FALSE}
+quiz(
+  question(
+    "Based on the sampling distribution plots above, which statement best describes the Central Limit Theorem?",
+    answer("Taking larger samples guarantees perfectly accurate results"),
+    answer("Sample sizes of exactly 100 observations are required"),
+    answer(
+      "As we increase the sample size, the distribution of sample means becomes approximately normal",
+      correct = TRUE,
+      message = "This is the essence of the Central Limit Theorem! Even with non-normal data, the sampling distribution approaches normality with larger samples."
+    ),
+    answer("Sample size has no effect on the shape of the sampling distribution"),
+    allow_retry = TRUE
+  )
+)
+```
+
+## Confidence Intervals
+
+A confidence interval provides a range of plausible values for a population parameter. For a sample mean, it's calculated as:
+
+$$
+\text{CI} = \bar{x} \pm t_{\alpha/2} \cdot \frac{s}{\sqrt{n}}
+$$
+
+The margin of error gets:
+
+- Smaller with larger sample sizes
+- Larger with more variable data
+- Larger with higher confidence levels
+
+First, I've written a function to calculate the confidence interval for a given sample. We will reuse this function throughout the tutorial:
+
+```{r ci-setup, echo=TRUE}
+# Calculate population mean for reference
+pop_mean <- mean(NHANES_adult$Height)
+
+# Function to calculate confidence interval
+calculate_ci <- function(data, confidence = 0.95) {
+  n <- length(data)
+  mean_val <- mean(data)
+  se <- sd(data) / sqrt(n)
+  error_margin <- qt((1 + confidence) / 2, df = n - 1) * se
+  
+  list(
+    lower = mean_val - error_margin,
+    upper = mean_val + error_margin,
+    mean = mean_val,
+    se = se
+  )
+}
+```
+
+This code simulates taking multiple samples and calculating their confidence intervals. The green lines show intervals that contain the true population mean (dashed line), while red lines show intervals that miss it. Try running it multiple times to see how the results vary:
+
+```{r ci-simulation, exercise=TRUE, exercise.setup="ci-setup"}
+# Modify these parameters to explore different scenarios
+n_samples <- 100      # Number of samples to take
+sample_size <- 30     # Try different sample sizes
+confidence <- 0.95    # Try different confidence levels (e.g., 0.80, 0.90, 0.99)
+
+# Store results
+results <- tibble(
+  sample = 1:n_samples,
+  lower = NA_real_,
+  upper = NA_real_,
+  mean = NA_real_,
+  contains_pop_mean = NA
+)
+
+# Take samples and calculate CIs
+for(i in 1:n_samples) {
+  sample_data <- NHANES_adult |>
+    sample_n(sample_size) |>
+    pull(Height)
+  
+  ci <- calculate_ci(sample_data, confidence)
+  
+  results$lower[i] <- ci$lower
+  results$upper[i] <- ci$upper
+  results$mean[i] <- ci$mean
+  results$contains_pop_mean[i] <- ci$lower <= pop_mean & pop_mean <= ci$upper
+}
+
+# Calculate proportion of CIs containing population mean
+prop_containing <- mean(results$contains_pop_mean)
+
+# Plot the intervals
+results |>
+  ggplot(aes(y = sample)) +
+  geom_segment(aes(x = lower, xend = upper, 
+                   color = contains_pop_mean),
+               linewidth = 1) +
+  geom_point(aes(x = mean, color = contains_pop_mean)) +
+  geom_vline(xintercept = pop_mean, linetype = "dashed") +
+  scale_color_manual(values = c("red", "darkgreen")) +
+  labs(title = paste(confidence * 100, "% Confidence Intervals from", n_samples, "Samples"),
+       subtitle = paste(round(prop_containing * 100, 1), 
+                       "% of intervals contain the population mean"),
+       x = "Height (cm)",
+       y = "Sample Number") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+### Final Exercise: Design Your Own Study
+
+Design a study to estimate the mean height of adults. Experiment with different sample sizes and confidence levels to find a balance between precision and reliability:
+
+```{r implement-design, exercise=TRUE, exercise.setup="ci-setup"}
+# Modify these parameters and run the code multiple times
+sample_size <- 100   # Try different sizes
+confidence <- 0.95   # Try different confidence levels
+
+# Take your sample and calculate CI
+sample_data <- NHANES_adult |>
+  sample_n(sample_size) |>
+  pull(Height)
+
+ci_result <- calculate_ci(sample_data, confidence)
+
+# Calculate precision (half the interval width)
+precision <- (ci_result$upper - ci_result$lower) / 2
+
+# Print results
+cat("Sample size:", sample_size, "\n")
+cat("Confidence level:", confidence * 100, "%\n")
+cat("Confidence interval:", round(ci_result$lower, 1), "to", round(ci_result$upper, 1), "cm\n")
+cat("Precision (±):", round(precision, 1), "cm\n")
+```
+
+```{r final-quiz, echo=FALSE}
+quiz(
+  question(
+    "What's the most effective way to get a precise estimate?",
+    answer("Small sample with high confidence"),
+    answer(
+      "Large sample with moderate confidence",
+      correct = TRUE,
+      message = "A larger sample size with 95% confidence provides good precision while maintaining reliability"
+    ),
+    answer("Small sample with low confidence"),
+    answer("It doesn't matter"),
+    allow_retry = TRUE
+  )
+)
